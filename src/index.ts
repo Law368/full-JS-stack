@@ -90,10 +90,7 @@ async function createElements() {
     }
 }
 
-function loadDefault() {
-    createElements();
-}
-document.addEventListener('DOMContentLoaded', loadDefault);
+document.addEventListener('DOMContentLoaded', createElements);
 document.addEventListener('click', (event) => {
     if ((event.target as HTMLElement).classList.contains('album')) {
         clickedElementId = (event.target as HTMLElement).id;
@@ -125,6 +122,6 @@ document.addEventListener('click', (event) => {
 document.addEventListener('click', (event) => {
     if ((event.target as HTMLElement).classList.contains('gallery__btn-back')) {
         document.body.innerHTML = '';
-        loadDefault();
+        createElements();
     }
 });
