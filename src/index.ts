@@ -22,13 +22,11 @@ const photosArr: Array<{
 }> = [];
 
 function setThumbnailSource(albumId: number) {
-    const thumbnailsPath: string[] = [];
-    photosArr.filter((image) => {
+    return photosArr.find((image) => {
         if (image.albumId === albumId + 1) {
-            return thumbnailsPath.push(image.thumbnailUrl);
+            return image.thumbnailUrl;
         }
-    });
-    return thumbnailsPath[0];
+    }).thumbnailUrl;
 }
 
 async function fetchAlbums() {
