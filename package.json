@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Law368/full-JS-stack#readme",
   "devDependencies": {
     "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
@@ -40,6 +41,7 @@
     "style-loader": "^3.3.1",
     "stylelint": "^14.3.0",
     "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^24.0.0",
     "stylelint-config-standard-scss": "^3.0.0",
@@ -51,5 +53,8 @@
     "webpack": "^5.67.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.3"
+  },
+  "dependencies": {
+    "core-js": "^3.20.3"
   }
 }

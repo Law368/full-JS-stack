@@ -1,5 +1,11 @@
-$body-color: green;
+$body-color: #fff;
 
 body {
-  background-color: $body-color;
+    background-color: $body-color;
+}
+
+.album {
+    background-color: rgb(129 129 129);
+    width: 300px;
+    height: 300px;
 }
