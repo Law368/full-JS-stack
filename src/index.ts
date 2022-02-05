@@ -1,125 +1,136 @@
 import './style.scss';
-
-// albums: https://jsonplaceholder.typicode.com/albums/
-// photos: https://jsonplaceholder.typicode.com/photos/
+import fetchData from './fetchData';
+import createElement from './createElement';
 
 const albumsUrl: string = 'https://jsonplaceholder.typicode.com/albums/';
 const photosUrl: string = 'https://jsonplaceholder.typicode.com/photos/';
 const defaultAlbumsNumberOnPage: number = 8;
+const wrapper = document.querySelector('.content-wrapper');
 
 let clickedElementId: string = '';
-const albumsArr: Array<{
-    userId: number;
-    id: number;
-    title: string;
-}> = [];
-const photosArr: Array<{
-    albumId: number;
-    id: number;
-    title: string;
-    url: string;
-    thumbnailUrl: string;
-}> = [];
 
-function setThumbnailSource(albumId: number) {
-    return photosArr.find((image) => {
-        if (image.albumId === albumId + 1) {
-            return image.thumbnailUrl;
-        }
-    }).thumbnailUrl;
-}
-
-async function fetchAlbums() {
-    try {
-        const getAlbums = await fetch(albumsUrl);
-        const albums = await getAlbums.json();
-        for (let i = 0; i < albums.length; i++) {
-            albumsArr.push(albums[i]);
-        }
-        return albums;
-    } catch (err) {
-        console.log('There was an error', err);
+async function setThumbnailSource(albumId: number) {
+    const photosArr = await fetchData(photosUrl);
+    const result = photosArr.find(
+        (image: any) => image.albumId === albumId + 1
+    );
+    if (result !== undefined) {
+        return result.thumbnailUrl;
     }
+    return '';
 }
 
-async function fetchPhotos() {
+async function createAlbums() {
     try {
-        const getPhotos = await fetch(photosUrl);
-        const photos = await getPhotos.json();
-        // console.log(albums);
-        for (let i = 0; i < photos.length; i++) {
-            photosArr.push(photos[i]);
-        }
-        // console.log(albumsArr);
-        return photos;
-    } catch (err) {
-        console.log('There was an error', err);
-    }
-}
-
-async function createElements() {
-    try {
-        await fetchAlbums();
-        await fetchPhotos();
+        const albumsArr = await fetchData(albumsUrl);
         for (let i = 0; i < defaultAlbumsNumberOnPage; i++) {
-            const album = document.createElement('div');
-            const heading = document.createElement('h3');
-            const id = document.createElement('p');
-            const thumbnail = document.createElement('img');
+            const album = createElement(
+                'div',
+                'album',
+                (i + 1).toString(),
+                undefined,
+                undefined,
+                undefined,
+                wrapper
+            );
+            const heading = createElement(
+                'h3',
+                'album__heading',
+                undefined,
+                albumsArr[i].title,
+                undefined,
+                undefined,
+                album
+            );
+            const id = createElement(
+                'p',
+                'album__ID',
+                undefined,
+                i.toString(),
+                undefined,
+                undefined,
+                album
+            );
+            const thumbnail = createElement(
+                'img',
+                'album__first-image',
+                undefined,
+                undefined,
+                'src',
+                await setThumbnailSource(i),
+                album
+            );
 
-            album.classList.add('album');
-            album.id = (i + 1).toString();
-            heading.classList.add('album__heading');
-            id.classList.add('album__ID');
-            thumbnail.classList.add('album__first-image');
-
-            heading.innerHTML = albumsArr[i].title;
-            // id.innerHTML = albumsArr[i].id;
-
-            thumbnail.setAttribute('src', setThumbnailSource(i));
-
-            document.body.appendChild(album);
-            album.appendChild(heading);
-            album.appendChild(id);
-            album.appendChild(thumbnail);
+            album.addEventListener('click', createGallery);
         }
     } catch (err) {
         console.log('There was an error', err);
     }
 }
 
-document.addEventListener('DOMContentLoaded', createElements);
-document.addEventListener('click', (event) => {
-    if ((event.target as HTMLElement).classList.contains('album')) {
+async function createGallery() {
+    try {
         clickedElementId = (event.target as HTMLElement).id;
-        document.body.innerHTML = '';
-        const galleryWrapper = document.createElement('div');
-        const returnBtn = document.createElement('button');
+        wrapper.innerHTML = '';
+        const galleryWrapper = createElement(
+            'div',
+            'gallery__Wrapper',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            wrapper
+        );
+        const returnBtn = createElement(
+            'button',
+            'gallery__btn-back',
+            undefined,
+            'return',
+            undefined,
+            undefined,
+            galleryWrapper
+        );
 
-        galleryWrapper.classList.add('gallery__Wrapper');
-        returnBtn.classList.add('gallery__btn-back');
-        returnBtn.innerHTML = 'return';
-
-        document.body.appendChild(galleryWrapper);
-        galleryWrapper.appendChild(returnBtn);
-
-        const currentGallery = photosArr.filter((image) => {
-            if (image.albumId.toString() === clickedElementId) {
-                return image;
-            }
+        returnBtn.addEventListener('click', () => {
+            wrapper.innerHTML = '';
+            createAlbums();
         });
-        for (let i = 0; i < currentGallery.length; i++) {
-            const image = document.createElement('img');
-            image.classList.add('gallery__image');
-            image.setAttribute('src', currentGallery[i].url);
-            galleryWrapper.appendChild(image);
-        }
-    }
-});
 
-document.addEventListener('click', (event) => {
-    if ((event.target as HTMLElement).classList.contains('gallery__btn-back')) {
-        document.body.innerHTML = '';
-        createElements();
+        const photosArr = await fetchData(photosUrl);
+        const currentGallery = photosArr.filter(
+            (image: any) => image.albumId.toString() === clickedElementId
+        );
+
+        for (let i = 0; i < currentGallery.length; i++) {
+            const image = createElement(
+                'img',
+                'gallery__image',
+                undefined,
+                undefined,
+                'src',
+                currentGallery[i].url,
+                galleryWrapper
+            );
+        }
+    } catch (err) {
+        console.log('The gallery wasnt created');
     }
-});
+}
+document.addEventListener('DOMContentLoaded', createAlbums);
+// 1. написать отдельную функцию fetchData для альбомов и изображений async function fetchData(url) +++
+// 2. разбить функции createAlbums и createGalleries +++
+// 3. навесить обработчики событий в момент создания элементов +++
+// 4. добавить wrapper внутрь body который будет обнулятся при создании элементов клике на альбом или кнопке +++
+// 5. убрать задокументированный код +++
+// 6. написать полный алгоритм работы приложения с условиями, без учета local storage. Как переместить состояние приложения в какой то объект либо делать какое то кастомное событие чтобы менять вид приложения с альбома на галллерею и наоборот. +++
+// 7. создать универсальную функцию для создания элементов в которую будут заноситься элементы, аттрибуты, классы и другие свойства. +++
+// 8. разнести функции fetchData в отдельные файлы и другие фнукции, чтобы очистить index.js
+// 9. теории promise, async/await и c .then
+
+/*
+---------------- АЛГОРИТМ РАБОТЫ ------------------------------------
+1. Страница загружается, происходит запуск функции createAlbums. На сервер отправляется запрос на получение альбомов. Албомы получаются. Создаются элементы альбомов и им присваиваются нужные им данные.
+2. Пользователь кликает на альбом, происходит запуск функции createGallery. На сервер отправляется запрос на получение фото. Создается элементы фото и присваиваются значения.
+3. Пользователь кликает на кнопку return, происходит запуск функции createAlbums.
+
+*/
