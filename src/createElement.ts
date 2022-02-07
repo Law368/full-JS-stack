@@ -1,11 +1,11 @@
 function createElement(
     tag: string,
     className: string,
+    parent?: any,
     id?: any,
     value?: any,
     attribute?: string,
-    attrValue?: any,
-    parent?: any
+    attrValue?: any
 ) {
     const element = document.createElement(tag);
     element.classList.add(className);

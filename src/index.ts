@@ -5,7 +5,7 @@ import {setThumbnailSource, photosUrl} from './setThumbnailSource';
 
 const albumsUrl: string = 'https://jsonplaceholder.typicode.com/albums/';
 
-const defaultAlbumsNumberOnPage: number = 16;
+const defaultAlbumsNumberOnPage: number = 4;
 const wrapper = document.querySelector('.content-wrapper');
 
 let clickedElementId: string = '';
@@ -18,38 +18,31 @@ const state = {
                 const album = createElement(
                     'div',
                     'album',
-                    (i + 1).toString(),
-                    undefined,
-                    undefined,
-                    undefined,
-                    wrapper
+                    wrapper,
+                    (i + 1).toString()
                 );
                 const heading = createElement(
                     'h3',
                     'album__heading',
+                    album,
                     undefined,
-                    albumsArr[i].title,
-                    undefined,
-                    undefined,
-                    album
+                    albumsArr[i].title
                 );
                 const id = createElement(
                     'p',
                     'album__ID',
+                    album,
                     undefined,
-                    i.toString(),
-                    undefined,
-                    undefined,
-                    album
+                    i.toString()
                 );
                 const thumbnail = createElement(
                     'img',
                     'album__first-image',
+                    album,
                     undefined,
                     undefined,
                     'src',
-                    await setThumbnailSource(i),
-                    album
+                    await setThumbnailSource(i)
                 );
 
                 album.addEventListener('click', state.galleryView);
@@ -65,20 +58,14 @@ const state = {
             const galleryWrapper = createElement(
                 'div',
                 'gallery__Wrapper',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
                 wrapper
             );
             const returnBtn = createElement(
                 'button',
                 'gallery__btn-back',
+                galleryWrapper,
                 undefined,
-                'return',
-                undefined,
-                undefined,
-                galleryWrapper
+                'return'
             );
 
             returnBtn.addEventListener('click', () => {
@@ -95,11 +82,11 @@ const state = {
                 const image = createElement(
                     'img',
                     'gallery__image',
+                    galleryWrapper,
                     undefined,
                     undefined,
                     'src',
-                    currentGallery[i].url,
-                    galleryWrapper
+                    currentGallery[i].url
                 );
             }
         } catch (err) {
