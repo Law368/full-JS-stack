@@ -9,13 +9,13 @@ function createElement(
 ) {
     const element = document.createElement(tag);
     element.classList.add(className);
-    if (value !== undefined) {
+    if (value) {
         element.innerHTML = value;
     }
-    if (id !== undefined) {
+    if (id) {
         element.id = id;
     }
-    if (attribute !== undefined) {
+    if (attribute && attrValue) {
         element.setAttribute(attribute, attrValue);
     }
     parent.appendChild(element);
