@@ -21,7 +21,9 @@
         "import/prefer-default-export": "off",
         "no-plusplus": "off",
         "no-underscore-dangle": "off",
-        "prettier/prettier": "warn"
+        "prettier/prettier": "warn",
+        "no-await-in-loop": "off",
+        "@typescript-eslint/no-use-before-define": "off"
     },
     "settings": {
         "import/resolver": "webpack"
