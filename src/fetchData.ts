@@ -5,6 +5,7 @@ async function fetchData(url: string) {
         return data;
     } catch (err) {
         console.log('There was an error while fetching Data', err);
+        throw new Error(err);
     }
 }
 

@@ -1,24 +1,24 @@
-function createElement(
-    tag: string,
-    className: string,
-    parent?: any,
-    id?: any,
-    value?: any,
-    attribute?: string,
-    attrValue?: any
-) {
-    const element = document.createElement(tag);
-    element.classList.add(className);
-    if (value) {
-        element.innerHTML = value;
+interface CreateElementProps {
+    tag: string;
+    className: string;
+    id?: string;
+    value?: string;
+    attribute?: string;
+    attrValue?: any;
+}
+
+function createElement(props: CreateElementProps) {
+    const element = document.createElement(props.tag);
+    element.classList.add(props.className);
+    if (props.value) {
+        element.innerHTML = props.value;
     }
-    if (id) {
-        element.id = id;
+    if (props.id) {
+        element.id = props.id;
     }
-    if (attribute && attrValue) {
-        element.setAttribute(attribute, attrValue);
+    if (props.attribute && props.attrValue) {
+        element.setAttribute(props.attribute, props.attrValue);
     }
-    parent.appendChild(element);
     return element;
 }
 
