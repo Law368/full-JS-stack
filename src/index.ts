@@ -4,15 +4,12 @@ import {getData} from './getData';
 
 const wrapper = document.querySelector('.content-wrapper');
 const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
-interface Photos {
-    id: number;
-    photos: Record<string, unknown>[];
-}
+
 const state = {
     _screen: 'albums',
     _id: 1 as number,
     _photos: {},
-    set photos(albums: Photos) {
+    set photos(albums) {
         this._photos = {...this._photos, [albums.id]: albums.photos};
     },
     get photos() {
@@ -42,9 +39,9 @@ async function setThumbnailSource(albumId: number) {
     const photosArr = await getData(
         `https://jsonplaceholder.typicode.com/albums/${albumId + 1}/photos`
     );
-    console.log(photosArr);
+
     const result = photosArr[0].thumbnailUrl;
-    state.photos = {id: albumId, photos: result};
+    state.photos = {id: albumId, photos: photosArr};
     if (result !== undefined) {
         return result;
     }
@@ -134,7 +131,7 @@ async function renderAlbums() {
             album.addEventListener('click', () => {
                 console.log(`The old screen was ${state.screen}`);
                 console.log(`The old state ID was ${state.id}`);
-                state.id = album.id;
+                state.id = i;
                 state.screen = 'gallery';
                 console.log(`The new state ID is ${state.id}`);
                 console.log(`The new screen is ${state.screen}`);
