@@ -5,6 +5,6 @@ module.exports = {
               "stylelint-config-prettier-scss"],
     plugins: ["stylelint-order", "stylelint-scss"],
     rules: {
-      // Дополнительные правила
+      "selector-class-pattern": "off",
     }
   };

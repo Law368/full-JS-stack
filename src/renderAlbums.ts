@@ -7,6 +7,7 @@ import {createLoadMoreBtn} from './createLoadMoreBtn';
 const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
 const wrapper = document.querySelector('.content-wrapper');
 const defaultAlbumsNumberOnPage: number = 8;
+let chosenAlbum = '';
 export async function renderAlbums() {
     try {
         const albumsArr = await getData(albumsUrl);
@@ -36,7 +37,7 @@ export async function renderAlbums() {
             const album = createElement({
                 tag: 'div',
                 className: 'album',
-                id: i.toString(),
+                id: (i + 1).toString(),
             });
             albumsWrapper.appendChild(album);
             const thumbnail = createElement({
@@ -60,14 +61,16 @@ export async function renderAlbums() {
             const id = createElement({
                 tag: 'p',
                 className: 'album__ID',
-                value: i.toString(),
+                value: (i + 1).toString(),
             });
             albumInfo.appendChild(id);
 
             album.addEventListener('click', () => {
                 console.log(`The old screen was ${state.screen}`);
                 console.log(`The old state ID was ${state.id}`);
-                state.id = i;
+                state.id = i + 1;
+                chosenAlbum = album.id;
+                console.log(`STRING ALBUM ID: ${album.id}`)
                 state.screen = 'gallery';
                 console.log(`The new state ID is ${state.id}`);
                 console.log(`The new screen is ${state.screen}`);
@@ -78,3 +81,4 @@ export async function renderAlbums() {
         console.log('There was an error', err);
     }
 }
+export {chosenAlbum};

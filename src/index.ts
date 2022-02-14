@@ -12,9 +12,11 @@ export async function onLoadMore() {
     const albumsWrapper = document.querySelector('.albumPage__wrapper');
     const newAlbums = await getData(
         `https://jsonplaceholder.typicode.com/albums/?_start=${
-            defaultAlbumsNumberOnPage * pageCounter
+            defaultAlbumsNumberOnPage * pageCounter + 1
         }&_end=${
-            defaultAlbumsNumberOnPage * pageCounter + defaultAlbumsNumberOnPage
+            defaultAlbumsNumberOnPage * pageCounter +
+            defaultAlbumsNumberOnPage +
+            1
         }`
     );
     for (let i = 0; i < newAlbums.length; i++) {
@@ -22,7 +24,7 @@ export async function onLoadMore() {
         const album = createElement({
             tag: 'div',
             className: 'album',
-            id: (newAlbums[i].id - 1).toString(),
+            id: newAlbums[i].id.toString(),
         });
         albumsWrapper.appendChild(album);
         album.addEventListener('click', () => {

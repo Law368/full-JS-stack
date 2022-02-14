@@ -24,7 +24,7 @@
         "prettier/prettier": "warn",
         "no-await-in-loop": "off",
         "@typescript-eslint/no-use-before-define": "off",
-        "selector-class-pattern": "off"
+        
     },
     "settings": {
         "import/resolver": "webpack"
