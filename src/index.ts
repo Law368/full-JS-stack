@@ -4,9 +4,16 @@ import {getData} from './getData';
 import {renderAlbums} from './renderAlbums';
 import createElement from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
+import { ScreenType } from './enums';
 
 const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
 let pageCounter = 1;
+
+////////////////////////// Вынести в отдельную функцию
+const screenType = localStorage.getItem('screenType');
+console.log(screenType);
+
+///////////////////////
 
 export async function onLoadMore() {
     const albumsWrapper = document.querySelector('.albumPage__wrapper');
@@ -94,7 +101,13 @@ const state = {
     },
 };
 
+ if (screenType === ScreenType.albums) { 
 renderAlbums();
+} else if (screenType === ScreenType.gallery){
+    renderGallery();
+} else {
+    renderAlbums();
+}
 
 /*
 ---------------- АЛГОРИТМ РАБОТЫ ------------------------------------

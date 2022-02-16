@@ -3,6 +3,7 @@ import createElement from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {getData} from './getData';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
+import { ScreenType } from './enums';
 
 const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
 const wrapper = document.querySelector('.content-wrapper');
@@ -66,19 +67,20 @@ export async function renderAlbums() {
             albumInfo.appendChild(id);
 
             album.addEventListener('click', () => {
-                console.log(`The old screen was ${state.screen}`);
                 console.log(`The old state ID was ${state.id}`);
-                state.id = i + 1;
-                chosenAlbum = album.id;
-                console.log(`STRING ALBUM ID: ${album.id}`)
+                state.id = Number(album.id);
+                console.log(album.id);
                 state.screen = 'gallery';
-                console.log(`The new state ID is ${state.id}`);
-                console.log(`The new screen is ${state.screen}`);
+                localStorage.setItem('albumID', album.id)
+                
             });
         }
         createLoadMoreBtn(onLoadMore);
+        localStorage.setItem('screenType', ScreenType.albums)
     } catch (err) {
         console.log('There was an error', err);
     }
 }
-export {chosenAlbum};
+
+
+export {chosenAlbum, ScreenType};
