@@ -11,7 +11,6 @@ let pageCounter = 1;
 
 ////////////////////////// Вынести в отдельную функцию
 const screenType = localStorage.getItem('screenType');
-console.log(screenType);
 
 ///////////////////////
 
@@ -94,7 +93,7 @@ const state = {
         return this._screen;
     },
     set id(data) {
-        this._id = Number(data) + 1;
+        this._id = Number(data);
     },
     get id(): number {
         return this._id;

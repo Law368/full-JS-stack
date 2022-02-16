@@ -7,12 +7,11 @@ const wrapper = document.querySelector('.content-wrapper');
 let myGlobalVariable = "";
 let imageOrder: any = "0";
 let fullImage:any;
-// let image: any;
 
 const screenType = localStorage.getItem('screenType');
-    console.log(screenType);
 export async function renderGallery() {
     const albumId = state.id?state.id:Number(localStorage.getItem('albumID'));
+    console.log(`ALBUM ID INSIDE GALLERY #2: ${localStorage.getItem('albumID')}`);
     let photos: {[key:number]:{
         albumId: number,
         id: number,
@@ -23,11 +22,15 @@ export async function renderGallery() {
         console.log(Object.keys(state.photos).length === 0, Object.keys(state.photos).length);
     if (Object.keys(state.photos).length !== 0) {
         photos = state.photos
+        console.log(11111)
     } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)}
+    console.log(22222)
+    console.log(photos)
 }
     const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
  
     try {
+        console.log(`Album ID: ${albumId}`);
         wrapper.innerHTML = '';
         const galleryWrapper = createElement({
             tag: 'div',
@@ -43,7 +46,7 @@ export async function renderGallery() {
         const galleryHeading = createElement({
             tag: 'h1',
             className: 'gallery__heading',
-            value: `${albumsArr[albumId - 1].title}`,
+            value: `${albumsArr[albumId].title}`,
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
