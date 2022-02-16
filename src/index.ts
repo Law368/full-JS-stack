@@ -4,14 +4,15 @@ import {getData} from './getData';
 import {renderAlbums} from './renderAlbums';
 import createElement from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
-import { ScreenType } from './enums';
+import { ScreenType, GalleryMode } from './enums';
+import renderFullImage from './renderFullImage';
 
 const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
 let pageCounter = 1;
 
 ////////////////////////// Вынести в отдельную функцию
 const screenType = localStorage.getItem('screenType');
-
+const galleryMode = localStorage.getItem('galleryMode');
 ///////////////////////
 
 export async function onLoadMore() {
@@ -99,20 +100,21 @@ const state = {
         return this._id;
     },
 };
-
+async function renderPage () {
  if (screenType === ScreenType.albums) { 
 renderAlbums();
 } else if (screenType === ScreenType.gallery){
-    renderGallery();
+    if (galleryMode === GalleryMode.fullscreen) {
+        console.log("THE CORRECT THING WAS USED")
+    await renderGallery();
+    renderFullImage(localStorage.getItem('fullImageUrl'));
 } else {
-    renderAlbums();
+        renderGallery();
+        console.log("THE INCORRECT CORRECT THING WAS USED")
+    }
+}
 }
 
-/*
----------------- АЛГОРИТМ РАБОТЫ ------------------------------------
-1. Страница загружается, происходит запуск функции createAlbums из свойства объекта state.albumsView. На сервер отправляется запрос на получение альбомов. Албомы получаются. Создаются элементы альбомов и им присваиваются нужные им данные. На каждый альбом навешивается обработчик клика.
-2. Пользователь кликает на альбом, происходит запуск функции createGallery из свойства объекта state.galleryView. На сервер отправляется запрос на получение фото. Создается кнопка  с обработчиком клика для возврата окна просмтора альбомов.Создаются фото и присваиваются значения.
-3. Пользователь кликает на кнопку return, происходит запуск функции createAlbums из свойства объекта state.albumsView.
-*/
+renderPage();
 
 export {state};

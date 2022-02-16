@@ -2,17 +2,16 @@ import createElement from './createElement';
 import {createBtn} from './createBtn';
 import {state} from '.';
 import {getData} from './getData';
-import { ScreenType } from './enums'
+import { ScreenType, GalleryMode } from './enums'
+import renderFullImage from './renderFullImage';
 const wrapper = document.querySelector('.content-wrapper');
-let myGlobalVariable = "";
 let imageOrder: any = "0";
 let fullImage:any;
 
+
 const screenType = localStorage.getItem('screenType');
 export async function renderGallery() {
-    console.log(`STATE ID INSIDE GALLERY: ${state.id}`)
     const albumId = state.id?state.id:Number(localStorage.getItem('albumID'));
-    console.log(`ALBUM ID INSIDE GALLERY #2: ${localStorage.getItem('albumID')}`);
     let photos: {[key:number]:{
         albumId: number,
         id: number,
@@ -20,18 +19,14 @@ export async function renderGallery() {
         title: string,
         url: string}[]};
 
-        console.log(Object.keys(state.photos).length === 0, Object.keys(state.photos).length);
+        // console.log(Object.keys(state.photos).length === 0, Object.keys(state.photos).length);
     if (Object.keys(state.photos).length !== 0) {
         photos = state.photos
-        console.log(11111)
     } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId + 1}/photos`)}
-    console.log(22222)
-    console.log(photos)
 }
     const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
  
     try {
-        console.log(`Album ID: ${albumId}`);
         wrapper.innerHTML = '';
         const galleryWrapper = createElement({
             tag: 'div',
@@ -55,9 +50,7 @@ export async function renderGallery() {
             tag: 'div',
             className: 'modal',
         });
-        // modal.addEventListener('click', function(){
-        //     modal.style.display="none"
-        // })
+       
         const closeModal = createElement({
             tag: 'span',
             className: 'close-modal',
@@ -114,8 +107,8 @@ export async function renderGallery() {
         closeModal.addEventListener('click', () => {
             modal.style.display = 'none';
             document.body.style.overflow="auto";
+            localStorage.setItem('galleryMode', GalleryMode.thumbnails)
         });
-        // modal.appendChild(document.querySelector('.gallery__image--selected'))
         document.body.appendChild(modal);
         for (let i = 0; i < photosArr.length; i += 1) {
             const imageContainer = createElement({
@@ -135,38 +128,18 @@ export async function renderGallery() {
             imageContainer.appendChild(image);
 
             image.addEventListener('click', () => {
-                myGlobalVariable = image.id;
                 imageOrder = image.dataset.order;
-
-                modal.style.display = 'block';
-                document.body.style.overflow="hidden";
-                fullImage = createElement({
-                    tag: 'img',
-                    className: 'gallery__image--selected',
-                    attribute: 'src',
-                    attrValue: `${image.getAttribute('src')}`
-                })
-                modalContent.appendChild(fullImage);
+                localStorage.setItem('fullImageUrl', image.getAttribute('src'));
+                renderFullImage(localStorage.getItem('fullImageUrl'));
             });
         }
         let images = document.querySelectorAll('.gallery__image');
         createBtn();
         localStorage.setItem('screenType', ScreenType.gallery)
+        localStorage.setItem('galleryMode', GalleryMode.thumbnails)
     } catch (err) {
         console.log('The gallery wasnt created', err);
     }
 }
 
-
-
-
-// записать текущего элемента в глобальную переменную +++
-// перебирать массив с фотографиями по id текущего элмента + 1
-// забираем url этого элемента
-// вставляем url в src
-
-// При создании галлереи изображения каждому элементу добавить data аттрибут с порядковым номером, который соответствует порядковому номеру в данном массиве
-// при клики next(prev) считываем значение data аттрибута текущей картинки, увеличиваем(уменьшаем) на 1
-// берем элемент из массива с полученным идентификатором (порядковым номером) arr[порядковый номер]
-// прокинуть data аттрибут с порядковым номером от маленькой картики к большой
-// выбираем элемент этого элемента и вставляем в src
+export { imageOrder}
