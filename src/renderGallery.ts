@@ -10,6 +10,7 @@ let fullImage:any;
 
 const screenType = localStorage.getItem('screenType');
 export async function renderGallery() {
+    console.log(`STATE ID INSIDE GALLERY: ${state.id}`)
     const albumId = state.id?state.id:Number(localStorage.getItem('albumID'));
     console.log(`ALBUM ID INSIDE GALLERY #2: ${localStorage.getItem('albumID')}`);
     let photos: {[key:number]:{
@@ -23,7 +24,7 @@ export async function renderGallery() {
     if (Object.keys(state.photos).length !== 0) {
         photos = state.photos
         console.log(11111)
-    } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)}
+    } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId + 1}/photos`)}
     console.log(22222)
     console.log(photos)
 }

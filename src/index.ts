@@ -72,7 +72,7 @@ export async function onLoadMore() {
 
 const state = {
     _screen: 'albums',
-    _id: 1 as number,
+    _id: null as number,
     _photos: {},
     set photos(albums) {
         this._photos = {...this._photos, [albums.id]: albums.photos};
