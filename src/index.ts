@@ -4,7 +4,7 @@ import {getData} from './getData';
 import {renderAlbums} from './renderAlbums';
 import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
-import { ScreenType, GalleryMode } from './enums';
+import {ScreenType, GalleryMode} from './enums';
 
 const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
 let pageCounter = 1;
@@ -70,7 +70,14 @@ export async function onLoadMore() {
     pageCounter++;
 }
 
-const state: {_screen: string, screen: string, id: any, _id: any, _photos: any, photos: any} = {
+const state: {
+    _screen: string;
+    screen: string;
+    id: any;
+    _id: any;
+    _photos: any;
+    photos: any;
+} = {
     _screen: 'albums',
     _id: null,
     _photos: {},
@@ -99,13 +106,14 @@ const state: {_screen: string, screen: string, id: any, _id: any, _photos: any, 
         return this._id;
     },
 };
-async function renderPage () {
- if (screenType === ScreenType.albums) { 
-renderAlbums();
-} else if (screenType === ScreenType.gallery){
-    renderGallery();
-}}
+async function renderPage() {
+    if (screenType === ScreenType.albums) {
+        renderAlbums();
+    } else if (screenType === ScreenType.gallery) {
+        renderGallery();
+    }
+}
 
 renderPage();
 
-export {state}
+export {state};

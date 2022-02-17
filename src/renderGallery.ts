@@ -2,48 +2,59 @@ import {createElement} from './createElement';
 import {createBtn} from './createBtn';
 import {state} from '.';
 import {getData} from './getData';
-import { ScreenType, GalleryMode } from './enums'
-import { shiftNextImgSrc } from './shiftNextImageSrc';
-import { shiftPrevImgSrc } from './shiftPrevImageSrc';
+import {ScreenType, GalleryMode} from './enums';
+import {shiftNextImgSrc} from './shiftNextImageSrc';
+import {shiftPrevImgSrc} from './shiftPrevImageSrc';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
-let imageIndex: any = "0";
-let fullImage:any;
+let imageIndex: any = '0';
+let fullImage: any;
 
 const screenType = localStorage.getItem('screenType');
 export async function renderGallery() {
-    const albumId = state.id?state.id:Number(localStorage.getItem('albumID'));
-    let photos: {[key:number]:{
-        albumId: number,
-        id: number,
-        thumbnailUrl: string,
-        title: string,
-        url: string}[]};
+    const albumId = state.id
+        ? state.id
+        : Number(localStorage.getItem('albumID'));
+    let photos: {
+        [key: number]: {
+            albumId: number;
+            id: number;
+            thumbnailUrl: string;
+            title: string;
+            url: string;
+        }[];
+    };
 
-        function renderFullImage (imageURL:any) {
-            const modal:HTMLElement = document.querySelector('.modal');
-            console.log(modal)
-            modal.style.display = 'block';
-            document.body.style.overflow="hidden";
-            const fullImage = createElement({
-                tag: 'img',
-                className: 'gallery__image--selected',
-                attribute: 'src',
-                attrValue: `${imageURL}`
-            })
-            console.log(fullImage.getAttribute('src'))
-            const modalContent:HTMLElement = document.querySelector('.modal-content');
-            modalContent.appendChild(fullImage);
-            localStorage.setItem('screenType', ScreenType.gallery)
-            localStorage.setItem('galleryMode', GalleryMode.fullscreen)
-}
+    function renderFullImage(imageURL: any) {
+        const modal: HTMLElement = document.querySelector('.modal');
+        console.log(modal);
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        const fullImage = createElement({
+            tag: 'img',
+            className: 'gallery__image--selected',
+            attribute: 'src',
+            attrValue: `${imageURL}`,
+        });
+        console.log(fullImage.getAttribute('src'));
+        const modalContent: HTMLElement =
+            document.querySelector('.modal-content');
+        modalContent.appendChild(fullImage);
+        localStorage.setItem('screenType', ScreenType.gallery);
+        localStorage.setItem('galleryMode', GalleryMode.fullscreen);
+    }
 
     if (Object.keys(state.photos).length !== 0) {
-        photos = state.photos
-    } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)}
-}
+        photos = state.photos;
+    } else {
+        photos = {
+            [albumId]: await getData(
+                `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`
+            ),
+        };
+    }
     const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
- 
+
     try {
         wrapper.innerHTML = '';
         const galleryWrapper = createElement({
@@ -68,7 +79,7 @@ export async function renderGallery() {
             tag: 'div',
             className: 'modal',
         });
-       
+
         const closeModal = createElement({
             tag: 'span',
             className: 'close-modal',
@@ -78,55 +89,55 @@ export async function renderGallery() {
 
         const modalContent = createElement({
             tag: 'div',
-            className: 'modal-content', 
-        })
-        modal.appendChild(modalContent)
+            className: 'modal-content',
+        });
+        modal.appendChild(modalContent);
 
         const nextImage = createElement({
             tag: 'a',
             className: 'image-next',
-            value: 'NEXT'
-        })
+            value: 'NEXT',
+        });
         modal.appendChild(nextImage);
         nextImage.addEventListener('click', function next() {
             if (Number(imageIndex) >= photos[albumId].length - 1) {
                 imageIndex = 0;
             }
-            console.log(photos, albumId, imageIndex)
+            console.log(photos, albumId, imageIndex);
             fullImage = createElement({
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][Number(shiftNextImgSrc())].url}`
-            })
+                attrValue: `${photos[albumId][Number(shiftNextImgSrc())].url}`,
+            });
             modalContent.appendChild(fullImage);
-            imageIndex = parseInt(imageIndex)+  1;
-        })
+            imageIndex = parseInt(imageIndex) + 1;
+        });
 
         const previousImage = createElement({
             tag: 'a',
             className: 'image-previous',
-            value: 'PREV'
-        })
+            value: 'PREV',
+        });
         modal.appendChild(previousImage);
         previousImage.addEventListener('click', function prev() {
-             if (Number(imageIndex) <= 0) {
+            if (Number(imageIndex) <= 0) {
                 imageIndex = photos[albumId].length;
             }
             fullImage = createElement({
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][Number(shiftPrevImgSrc())].url}`
-            })
+                attrValue: `${photos[albumId][Number(shiftPrevImgSrc())].url}`,
+            });
             modalContent.appendChild(fullImage);
             imageIndex = parseInt(imageIndex) - 1;
-        })
+        });
 
         closeModal.addEventListener('click', () => {
             modal.style.display = 'none';
-            document.body.style.overflow="auto";
-            localStorage.setItem('galleryMode', GalleryMode.thumbnails)
+            document.body.style.overflow = 'auto';
+            localStorage.setItem('galleryMode', GalleryMode.thumbnails);
         });
         document.body.appendChild(modal);
         for (let i = 0; i < photosArr.length; i += 1) {
@@ -154,8 +165,8 @@ export async function renderGallery() {
         }
         let images = document.querySelectorAll('.gallery__image');
         createBtn();
-        localStorage.setItem('screenType', ScreenType.gallery)
-        localStorage.setItem('galleryMode', GalleryMode.thumbnails)
+        localStorage.setItem('screenType', ScreenType.gallery);
+        localStorage.setItem('galleryMode', GalleryMode.thumbnails);
 
         if (galleryMode === GalleryMode.fullscreen) {
             renderFullImage(localStorage.getItem('fullImageUrl'));
@@ -165,4 +176,4 @@ export async function renderGallery() {
     }
 }
 
-export { imageIndex}
+export {imageIndex};

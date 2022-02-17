@@ -3,9 +3,9 @@ import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {getData} from './getData';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
-import { ScreenType } from './enums';
+import {ScreenType} from './enums';
 
-const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
+const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/ ';
 const wrapper = document.querySelector('.content-wrapper');
 const defaultAlbumsNumberOnPage: number = 8;
 let chosenAlbum = '';
@@ -38,7 +38,7 @@ export async function renderAlbums() {
             const album = createElement({
                 tag: 'div',
                 className: 'album',
-                id: (i).toString(),
+                id: i.toString(),
             });
             albumsWrapper.appendChild(album);
             const thumbnail = createElement({
@@ -62,7 +62,7 @@ export async function renderAlbums() {
             const id = createElement({
                 tag: 'p',
                 className: 'album__ID',
-                value: (i).toString(),
+                value: i.toString(),
             });
             albumInfo.appendChild(id);
 
@@ -72,17 +72,15 @@ export async function renderAlbums() {
                 state.id = Number(album.id);
                 console.log(`State id #2: ${state.id}`);
                 console.log(`Album id #2: ${album.id}`);
-                localStorage.setItem('albumID', album.id)
+                localStorage.setItem('albumID', album.id);
                 state.screen = 'gallery';
-                
             });
         }
         createLoadMoreBtn(onLoadMore);
-        localStorage.setItem('screenType', ScreenType.albums)
+        localStorage.setItem('screenType', ScreenType.albums);
     } catch (err) {
         console.log('There was an error', err);
     }
 }
-
 
 export {chosenAlbum, ScreenType};

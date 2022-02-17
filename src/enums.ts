@@ -1,12 +1,11 @@
 enum ScreenType {
     albums = 'albums',
-    gallery = 'gallery'
-    
+    gallery = 'gallery',
 }
 
 enum GalleryMode {
     thumbnails = 'thumbnails',
-    fullscreen = 'fullscreen'
+    fullscreen = 'fullscreen',
 }
 
 export {ScreenType, GalleryMode};
