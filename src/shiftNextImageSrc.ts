@@ -1,5 +1,6 @@
 import {imageIndex} from './renderGallery';
-function shiftNextImgSrc() {
+//Поставить imgIndex как параметр
+function shiftNextImgSrc(imageIndex: number) {
     return imageIndex + 1;
 }
 

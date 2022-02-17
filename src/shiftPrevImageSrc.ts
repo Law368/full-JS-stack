@@ -1,5 +1,5 @@
 import {imageIndex} from './renderGallery';
-function shiftPrevImgSrc() {
+function shiftPrevImgSrc(imageIndex: number) {
     return imageIndex - 1;
 }
 export {shiftPrevImgSrc};

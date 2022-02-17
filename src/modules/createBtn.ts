@@ -1,5 +1,5 @@
-import {createElement} from './createElement';
-import {getStateValue, setStateValue} from './state';
+import {createElement} from '../createElement';
+import {getStateValue, setStateValue} from '../state';
 
 const wrapper = document.querySelector('.content-wrapper');
 export function createBtn() {

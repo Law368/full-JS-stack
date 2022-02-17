@@ -4,17 +4,17 @@ import {getData} from './getData';
 import {renderAlbums} from './renderAlbums';
 import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
-import {ScreenType, GalleryMode} from './enums';
+import {ScreenType} from './enums';
 import {getStateValue, setStateValue} from './state';
-
-const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
+// TODO:  переименовать в defaultAlbumsAmount
+const defaultAlbumsNumberOnPage: number = 8;
 let pageCounter = 1;
 
 ////////////////////////// Вынести в отдельную функцию
 const screenType = localStorage.getItem('screenType');
-const galleryMode = localStorage.getItem('galleryMode');
 ///////////////////////
-
+// TODO: Попробовать сделать универсальную функцию для onLoadMore и renderAlbums, которая будет получать данные с альбомами и рендерить соответствующие элементы в прямой зависимости от длины массива.
+// TODO: Вынести onLoadMore в отдельный файл после создания универсальной функции внутри нее.
 export async function onLoadMore() {
     const albumsWrapper = document.querySelector('.albumPage__wrapper');
     const newAlbums = await getData(

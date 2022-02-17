@@ -1,6 +1,4 @@
 import {createElement} from './createElement';
-import {renderAlbums} from './renderAlbums';
-import {getData} from './getData';
 
 const wrapper = document.querySelector('.content-wrapper');
 const defaultAlbumsNumberOnPage: number = 8;

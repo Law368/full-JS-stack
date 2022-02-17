@@ -1,16 +1,17 @@
 import {createElement} from './createElement';
-import {createBtn} from './createBtn';
+import {createBtn} from './modules/createBtn';
 import {getData} from './getData';
 import {ScreenType, GalleryMode} from './enums';
 import {shiftNextImgSrc} from './shiftNextImageSrc';
 import {shiftPrevImgSrc} from './shiftPrevImageSrc';
-import {getStateValue, setStateValue} from './state';
+import {getStateValue} from './state';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
-let imageIndex: any = '0';
-let fullImage: any;
+const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
 
-const screenType = localStorage.getItem('screenType');
+let imageIndex = 0;
+let fullImage;
+
 export async function renderGallery() {
     const idFromState = getStateValue('id');
     const photosFromState = getStateValue('photos');
@@ -18,6 +19,7 @@ export async function renderGallery() {
     const albumId = idFromState
         ? idFromState
         : Number(localStorage.getItem('albumID'));
+    // TODO: вынести photos в отдельный файл types.ts Interface photos
     let photos: {
         [key: number]: {
             albumId: number;
@@ -27,10 +29,11 @@ export async function renderGallery() {
             url: string;
         }[];
     };
+    // {[key: string]: []}
 
     function renderFullImage(imageURL: any) {
+        // TODO: Вынести в отдельный файл и вызывать внутри renderGallery
         const modal: HTMLElement = document.querySelector('.modal');
-        console.log(modal);
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
         const fullImage = createElement({
@@ -39,7 +42,6 @@ export async function renderGallery() {
             attribute: 'src',
             attrValue: `${imageURL}`,
         });
-        console.log(fullImage.getAttribute('src'));
         const modalContent: HTMLElement =
             document.querySelector('.modal-content');
         modalContent.appendChild(fullImage);
@@ -56,7 +58,6 @@ export async function renderGallery() {
             ),
         };
     }
-    const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
 
     try {
         wrapper.innerHTML = '';
@@ -65,6 +66,7 @@ export async function renderGallery() {
             className: 'gallery__Wrapper',
         });
         wrapper.appendChild(galleryWrapper);
+        // TODO: класть в local storage все альбомы (использовать json.stringify чтобы объект переконвертировать в строку)
         const albumsArr = await getData(albumsUrl);
         const galleryInfo = createElement({
             tag: 'div',
@@ -78,6 +80,7 @@ export async function renderGallery() {
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
+        // TODO: Вынести создание модалки в отдельную функцию
         const modal = createElement({
             tag: 'div',
             className: 'modal',
@@ -102,7 +105,7 @@ export async function renderGallery() {
             value: 'NEXT',
         });
         modal.appendChild(nextImage);
-        nextImage.addEventListener('click', function next() {
+        nextImage.addEventListener('click', function () {
             if (Number(imageIndex) >= photos[albumId].length - 1) {
                 imageIndex = 0;
             }
@@ -111,10 +114,12 @@ export async function renderGallery() {
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][Number(shiftNextImgSrc())].url}`,
+                attrValue: `${
+                    photos[albumId][Number(shiftNextImgSrc(imageIndex))].url
+                }`,
             });
             modalContent.appendChild(fullImage);
-            imageIndex = parseInt(imageIndex) + 1;
+            imageIndex = imageIndex + 1;
         });
 
         const previousImage = createElement({
@@ -123,7 +128,7 @@ export async function renderGallery() {
             value: 'PREV',
         });
         modal.appendChild(previousImage);
-        previousImage.addEventListener('click', function prev() {
+        previousImage.addEventListener('click', function () {
             if (Number(imageIndex) <= 0) {
                 imageIndex = photos[albumId].length;
             }
@@ -131,10 +136,12 @@ export async function renderGallery() {
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][Number(shiftPrevImgSrc())].url}`,
+                attrValue: `${
+                    photos[albumId][Number(shiftPrevImgSrc(imageIndex))].url
+                }`,
             });
             modalContent.appendChild(fullImage);
-            imageIndex = parseInt(imageIndex) - 1;
+            imageIndex = imageIndex - 1;
         });
 
         closeModal.addEventListener('click', () => {
@@ -143,6 +150,7 @@ export async function renderGallery() {
             localStorage.setItem('galleryMode', GalleryMode.thumbnails);
         });
         document.body.appendChild(modal);
+        //TODO: Вынести отдельно функцию создания изображений
         for (let i = 0; i < photosArr.length; i += 1) {
             const imageContainer = createElement({
                 tag: 'div',
@@ -161,12 +169,11 @@ export async function renderGallery() {
             imageContainer.appendChild(image);
 
             image.addEventListener('click', () => {
-                imageIndex = image.dataset.order;
+                imageIndex = Number(image.dataset.order);
                 localStorage.setItem('fullImageUrl', image.getAttribute('src'));
                 renderFullImage(localStorage.getItem('fullImageUrl'));
             });
         }
-        let images = document.querySelectorAll('.gallery__image');
         createBtn();
         localStorage.setItem('screenType', ScreenType.gallery);
         localStorage.setItem('galleryMode', GalleryMode.thumbnails);
