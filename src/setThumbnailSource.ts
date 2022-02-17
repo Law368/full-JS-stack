@@ -1,5 +1,5 @@
 import {getData} from './getData';
-import {state} from './index';
+import {setStateValue} from './state';
 
 export async function setThumbnailSource(albumId: number) {
     const photosArr = await getData(
@@ -7,7 +7,7 @@ export async function setThumbnailSource(albumId: number) {
     );
 
     const result = photosArr[0].thumbnailUrl;
-    state.photos = {id: albumId, photos: photosArr};
+    setStateValue('photos', {id: albumId, photos: photosArr});
     if (result !== undefined) {
         return result;
     }

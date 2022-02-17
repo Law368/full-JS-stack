@@ -5,6 +5,7 @@ import {renderAlbums} from './renderAlbums';
 import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {ScreenType, GalleryMode} from './enums';
+import {getStateValue, setStateValue} from './state';
 
 const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
 let pageCounter = 1;
@@ -34,12 +35,12 @@ export async function onLoadMore() {
         });
         albumsWrapper.appendChild(album);
         album.addEventListener('click', () => {
-            console.log(`The old screen was ${state.screen}`);
-            console.log(`The old state ID was ${state.id}`);
-            state.id = newAlbums[i].id;
-            state.screen = 'gallery';
-            console.log(`The new state ID is ${state.id}`);
-            console.log(`The new screen is ${state.screen}`);
+            console.log(`The old screen was ${getStateValue('screen')}`);
+            console.log(`The old state ID was ${getStateValue('id')}`);
+            setStateValue('id', newAlbums[i].id);
+            setStateValue('screen', 'gallery');
+            console.log(`The new state ID is ${getStateValue('id')}`);
+            console.log(`The new screen is ${getStateValue('screen')}`);
         });
         const thumbnail = createElement({
             tag: 'img',
@@ -70,42 +71,6 @@ export async function onLoadMore() {
     pageCounter++;
 }
 
-const state: {
-    _screen: string;
-    screen: string;
-    id: any;
-    _id: any;
-    _photos: any;
-    photos: any;
-} = {
-    _screen: 'albums',
-    _id: null,
-    _photos: {},
-    set photos(albums) {
-        this._photos = {...this._photos, [albums.id]: albums.photos};
-    },
-    get photos() {
-        return this._photos;
-    },
-    set screen(type) {
-        this._screen = type;
-        // body.innerHTML = '';
-        if (type === 'gallery') {
-            renderGallery();
-            return;
-        }
-        renderAlbums();
-    },
-    get screen() {
-        return this._screen;
-    },
-    set id(data) {
-        this._id = Number(data);
-    },
-    get id(): number {
-        return this._id;
-    },
-};
 async function renderPage() {
     if (screenType === ScreenType.albums) {
         renderAlbums();
@@ -115,5 +80,3 @@ async function renderPage() {
 }
 
 renderPage();
-
-export {state};
