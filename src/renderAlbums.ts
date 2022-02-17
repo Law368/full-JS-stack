@@ -1,5 +1,5 @@
 import {state, onLoadMore} from '.';
-import createElement from './createElement';
+import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {getData} from './getData';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
@@ -34,7 +34,7 @@ export async function renderAlbums() {
             className: 'albumPage__wrapper',
         });
         wrapper.appendChild(albumsWrapper);
-        for (let i = 0; i < defaultAlbumsNumberOnPage; i++) {
+        for (let i = 1; i <= defaultAlbumsNumberOnPage; i++) {
             const album = createElement({
                 tag: 'div',
                 className: 'album',
@@ -62,7 +62,7 @@ export async function renderAlbums() {
             const id = createElement({
                 tag: 'p',
                 className: 'album__ID',
-                value: (i + 1).toString(),
+                value: (i).toString(),
             });
             albumInfo.appendChild(id);
 

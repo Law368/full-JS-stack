@@ -22,4 +22,4 @@ function createElement(props: CreateElementProps) {
     return element;
 }
 
-export default createElement;
+export {createElement};
