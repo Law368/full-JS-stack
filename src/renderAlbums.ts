@@ -1,5 +1,5 @@
 import {state, onLoadMore} from '.';
-import createElement from './createElement';
+import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {getData} from './getData';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
@@ -34,11 +34,11 @@ export async function renderAlbums() {
             className: 'albumPage__wrapper',
         });
         wrapper.appendChild(albumsWrapper);
-        for (let i = 0; i < defaultAlbumsNumberOnPage; i++) {
+        for (let i = 1; i <= defaultAlbumsNumberOnPage; i++) {
             const album = createElement({
                 tag: 'div',
                 className: 'album',
-                id: (i + 1).toString(),
+                id: (i).toString(),
             });
             albumsWrapper.appendChild(album);
             const thumbnail = createElement({
@@ -62,16 +62,18 @@ export async function renderAlbums() {
             const id = createElement({
                 tag: 'p',
                 className: 'album__ID',
-                value: (i + 1).toString(),
+                value: (i).toString(),
             });
             albumInfo.appendChild(id);
 
             album.addEventListener('click', () => {
-                console.log(`The old state ID was ${state.id}`);
+                console.log(`State id #1: ${state.id}`);
+                console.log(`Album id #1: ${album.id}`);
                 state.id = Number(album.id);
-                console.log(album.id);
-                state.screen = 'gallery';
+                console.log(`State id #2: ${state.id}`);
+                console.log(`Album id #2: ${album.id}`);
                 localStorage.setItem('albumID', album.id)
+                state.screen = 'gallery';
                 
             });
         }

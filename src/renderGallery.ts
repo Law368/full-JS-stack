@@ -1,16 +1,16 @@
-import createElement from './createElement';
+import {createElement} from './createElement';
 import {createBtn} from './createBtn';
 import {state} from '.';
 import {getData} from './getData';
-import { ScreenType } from './enums'
+import { ScreenType, GalleryMode } from './enums'
+import { shiftNextImgSrc } from './shiftNextImageSrc';
+import { shiftPrevImgSrc } from './shiftPrevImageSrc';
 const wrapper = document.querySelector('.content-wrapper');
-let myGlobalVariable = "";
-let imageOrder: any = "0";
+const galleryMode = localStorage.getItem('galleryMode');
+let imageIndex: any = "0";
 let fullImage:any;
-// let image: any;
 
 const screenType = localStorage.getItem('screenType');
-    console.log(screenType);
 export async function renderGallery() {
     const albumId = state.id?state.id:Number(localStorage.getItem('albumID'));
     let photos: {[key:number]:{
@@ -20,7 +20,24 @@ export async function renderGallery() {
         title: string,
         url: string}[]};
 
-        console.log(Object.keys(state.photos).length === 0, Object.keys(state.photos).length);
+        function renderFullImage (imageURL:any) {
+            const modal:HTMLElement = document.querySelector('.modal');
+            console.log(modal)
+            modal.style.display = 'block';
+            document.body.style.overflow="hidden";
+            const fullImage = createElement({
+                tag: 'img',
+                className: 'gallery__image--selected',
+                attribute: 'src',
+                attrValue: `${imageURL}`
+            })
+            console.log(fullImage.getAttribute('src'))
+            const modalContent:HTMLElement = document.querySelector('.modal-content');
+            modalContent.appendChild(fullImage);
+            localStorage.setItem('screenType', ScreenType.gallery)
+            localStorage.setItem('galleryMode', GalleryMode.fullscreen)
+}
+
     if (Object.keys(state.photos).length !== 0) {
         photos = state.photos
     } else {photos = {[albumId]: await getData(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)}
@@ -43,7 +60,7 @@ export async function renderGallery() {
         const galleryHeading = createElement({
             tag: 'h1',
             className: 'gallery__heading',
-            value: `${albumsArr[albumId - 1].title}`,
+            value: `${albumsArr[albumId].title}`,
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
@@ -51,9 +68,7 @@ export async function renderGallery() {
             tag: 'div',
             className: 'modal',
         });
-        // modal.addEventListener('click', function(){
-        //     modal.style.display="none"
-        // })
+       
         const closeModal = createElement({
             tag: 'span',
             className: 'close-modal',
@@ -74,17 +89,18 @@ export async function renderGallery() {
         })
         modal.appendChild(nextImage);
         nextImage.addEventListener('click', function next() {
-            if (Number(imageOrder) >= photos[albumId].length - 1) {
-                imageOrder = 0;
+            if (Number(imageIndex) >= photos[albumId].length - 1) {
+                imageIndex = 0;
             }
+            console.log(photos, albumId, imageIndex)
             fullImage = createElement({
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][parseInt(imageOrder + 1)].url}`
+                attrValue: `${photos[albumId][Number(shiftNextImgSrc())].url}`
             })
             modalContent.appendChild(fullImage);
-            imageOrder = parseInt(imageOrder)+  1;
+            imageIndex = parseInt(imageIndex)+  1;
         })
 
         const previousImage = createElement({
@@ -93,25 +109,25 @@ export async function renderGallery() {
             value: 'PREV'
         })
         modal.appendChild(previousImage);
-        previousImage.addEventListener('click', function next() {
-             if (Number(imageOrder) <= 0) {
-                imageOrder = photos[albumId].length;
+        previousImage.addEventListener('click', function prev() {
+             if (Number(imageIndex) <= 0) {
+                imageIndex = photos[albumId].length;
             }
             fullImage = createElement({
                 tag: 'img',
                 className: 'gallery__image--selected',
                 attribute: 'src',
-                attrValue: `${photos[albumId][imageOrder - 1].url}`
+                attrValue: `${photos[albumId][Number(shiftPrevImgSrc())].url}`
             })
             modalContent.appendChild(fullImage);
-            imageOrder = parseInt(imageOrder) - 1;
+            imageIndex = parseInt(imageIndex) - 1;
         })
 
         closeModal.addEventListener('click', () => {
             modal.style.display = 'none';
             document.body.style.overflow="auto";
+            localStorage.setItem('galleryMode', GalleryMode.thumbnails)
         });
-        // modal.appendChild(document.querySelector('.gallery__image--selected'))
         document.body.appendChild(modal);
         for (let i = 0; i < photosArr.length; i += 1) {
             const imageContainer = createElement({
@@ -131,38 +147,22 @@ export async function renderGallery() {
             imageContainer.appendChild(image);
 
             image.addEventListener('click', () => {
-                myGlobalVariable = image.id;
-                imageOrder = image.dataset.order;
-
-                modal.style.display = 'block';
-                document.body.style.overflow="hidden";
-                fullImage = createElement({
-                    tag: 'img',
-                    className: 'gallery__image--selected',
-                    attribute: 'src',
-                    attrValue: `${image.getAttribute('src')}`
-                })
-                modalContent.appendChild(fullImage);
+                imageIndex = image.dataset.order;
+                localStorage.setItem('fullImageUrl', image.getAttribute('src'));
+                renderFullImage(localStorage.getItem('fullImageUrl'));
             });
         }
         let images = document.querySelectorAll('.gallery__image');
         createBtn();
         localStorage.setItem('screenType', ScreenType.gallery)
+        localStorage.setItem('galleryMode', GalleryMode.thumbnails)
+
+        if (galleryMode === GalleryMode.fullscreen) {
+            renderFullImage(localStorage.getItem('fullImageUrl'));
+        }
     } catch (err) {
         console.log('The gallery wasnt created', err);
     }
 }
 
-
-
-
-// записать текущего элемента в глобальную переменную +++
-// перебирать массив с фотографиями по id текущего элмента + 1
-// забираем url этого элемента
-// вставляем url в src
-
-// При создании галлереи изображения каждому элементу добавить data аттрибут с порядковым номером, который соответствует порядковому номеру в данном массиве
-// при клики next(prev) считываем значение data аттрибута текущей картинки, увеличиваем(уменьшаем) на 1
-// берем элемент из массива с полученным идентификатором (порядковым номером) arr[порядковый номер]
-// прокинуть data аттрибут с порядковым номером от маленькой картики к большой
-// выбираем элемент этого элемента и вставляем в src
+export { imageIndex}

@@ -1,4 +1,4 @@
-import createElement from './createElement';
+import {createElement} from './createElement';
 import {renderAlbums} from './renderAlbums';
 import {getData} from './getData';
 

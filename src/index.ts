@@ -2,17 +2,16 @@ import './style.scss';
 import {renderGallery} from './renderGallery';
 import {getData} from './getData';
 import {renderAlbums} from './renderAlbums';
-import createElement from './createElement';
+import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
-import { ScreenType } from './enums';
+import { ScreenType, GalleryMode } from './enums';
 
 const defaultAlbumsNumberOnPage: number = 8; // переименовать в defaultAlbumsAmount
 let pageCounter = 1;
 
 ////////////////////////// Вынести в отдельную функцию
 const screenType = localStorage.getItem('screenType');
-console.log(screenType);
-
+const galleryMode = localStorage.getItem('galleryMode');
 ///////////////////////
 
 export async function onLoadMore() {
@@ -71,9 +70,9 @@ export async function onLoadMore() {
     pageCounter++;
 }
 
-const state = {
+const state: {_screen: string, screen: string, id: any, _id: any, _photos: any, photos: any} = {
     _screen: 'albums',
-    _id: 1 as number,
+    _id: null,
     _photos: {},
     set photos(albums) {
         this._photos = {...this._photos, [albums.id]: albums.photos};
@@ -94,26 +93,19 @@ const state = {
         return this._screen;
     },
     set id(data) {
-        this._id = Number(data) + 1;
+        this._id = Number(data);
     },
     get id(): number {
         return this._id;
     },
 };
-
+async function renderPage () {
  if (screenType === ScreenType.albums) { 
 renderAlbums();
 } else if (screenType === ScreenType.gallery){
     renderGallery();
-} else {
-    renderAlbums();
-}
+}}
 
-/*
----------------- АЛГОРИТМ РАБОТЫ ------------------------------------
-1. Страница загружается, происходит запуск функции createAlbums из свойства объекта state.albumsView. На сервер отправляется запрос на получение альбомов. Албомы получаются. Создаются элементы альбомов и им присваиваются нужные им данные. На каждый альбом навешивается обработчик клика.
-2. Пользователь кликает на альбом, происходит запуск функции createGallery из свойства объекта state.galleryView. На сервер отправляется запрос на получение фото. Создается кнопка  с обработчиком клика для возврата окна просмтора альбомов.Создаются фото и присваиваются значения.
-3. Пользователь кликает на кнопку return, происходит запуск функции createAlbums из свойства объекта state.albumsView.
-*/
+renderPage();
 
-export {state};
+export {state}

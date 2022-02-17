@@ -1,5 +1,5 @@
 import {state} from './index';
-import createElement from './createElement';
+import {createElement} from './createElement';
 
 const wrapper = document.querySelector('.content-wrapper');
 export function createBtn() {
