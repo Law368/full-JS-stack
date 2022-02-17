@@ -1,10 +1,10 @@
 import {createElement} from './createElement';
 import {createBtn} from './createBtn';
-import {state} from '.';
 import {getData} from './getData';
 import {ScreenType, GalleryMode} from './enums';
 import {shiftNextImgSrc} from './shiftNextImageSrc';
 import {shiftPrevImgSrc} from './shiftPrevImageSrc';
+import {getStateValue, setStateValue} from './state';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
 let imageIndex: any = '0';
@@ -12,8 +12,11 @@ let fullImage: any;
 
 const screenType = localStorage.getItem('screenType');
 export async function renderGallery() {
-    const albumId = state.id
-        ? state.id
+    const idFromState = getStateValue('id');
+    const photosFromState = getStateValue('photos');
+
+    const albumId = idFromState
+        ? idFromState
         : Number(localStorage.getItem('albumID'));
     let photos: {
         [key: number]: {
@@ -44,8 +47,8 @@ export async function renderGallery() {
         localStorage.setItem('galleryMode', GalleryMode.fullscreen);
     }
 
-    if (Object.keys(state.photos).length !== 0) {
-        photos = state.photos;
+    if (Object.keys(photosFromState).length !== 0) {
+        photos = photosFromState;
     } else {
         photos = {
             [albumId]: await getData(
