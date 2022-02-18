@@ -7,6 +7,7 @@ import {setThumbnailSource} from './setThumbnailSource';
 import {ScreenType} from './enums';
 import {getStateValue, setStateValue} from './state';
 import {fetchAlbumsInfo} from './modules/fetchAlbumsInfo';
+import {renderAlbumElements} from './modules/renderAlbumElements';
 const defaultAlbumsAmount: number = 8;
 let pageCounter = 1;
 
@@ -22,48 +23,7 @@ export async function onLoadMore() {
             defaultAlbumsAmount * pageCounter + 1
         }&_end=${defaultAlbumsAmount * pageCounter + defaultAlbumsAmount + 1}`
     );
-    for (let i = 0; i < newAlbums.length; i++) {
-        console.log(newAlbums[i].id);
-        const album = createElement({
-            tag: 'div',
-            className: 'album',
-            id: newAlbums[i].id.toString(),
-        });
-        albumsWrapper.appendChild(album);
-        album.addEventListener('click', () => {
-            console.log(`The old screen was ${getStateValue('screen')}`);
-            console.log(`The old state ID was ${getStateValue('id')}`);
-            setStateValue('id', newAlbums[i].id);
-            setStateValue('screen', 'gallery');
-            console.log(`The new state ID is ${getStateValue('id')}`);
-            console.log(`The new screen is ${getStateValue('screen')}`);
-        });
-        const thumbnail = createElement({
-            tag: 'img',
-            className: 'album__first-image',
-            attribute: 'src',
-            attrValue: await setThumbnailSource(newAlbums[i].id),
-        });
-        album.appendChild(thumbnail);
-        const albumInfo = createElement({
-            tag: 'div',
-            className: 'album__info',
-        });
-        album.appendChild(albumInfo);
-        // console.log(newAlbums[i]);
-        const heading = createElement({
-            tag: 'h3',
-            className: 'album__heading',
-            value: newAlbums[i].title,
-        });
-        albumInfo.appendChild(heading);
-        const id = createElement({
-            tag: 'p',
-            className: 'album__ID',
-            value: (newAlbums[i].id - 1).toString(),
-        });
-        albumInfo.appendChild(id);
-    }
+    renderAlbumElements(newAlbums, albumsWrapper);
     pageCounter++;
 }
 

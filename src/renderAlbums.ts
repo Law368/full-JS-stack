@@ -1,18 +1,17 @@
 import {onLoadMore} from '.';
 import {createElement} from './createElement';
-import {setThumbnailSource} from './setThumbnailSource';
-import {getData} from './getData';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
 import {ScreenType} from './enums';
-import {getStateValue, setStateValue} from './state';
+import {renderAlbumElements} from './modules/renderAlbumElements';
 
-const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/ ';
 const wrapper = document.querySelector('.content-wrapper');
-const defaultAlbumsAmount: number = 8;
+const defaultAlbumsAmount: any = JSON.parse(
+    localStorage.getItem('albumsInfo')
+).slice(0, 8);
 let chosenAlbum = '';
 export async function renderAlbums() {
     try {
-        const albumsArr = await getData(albumsUrl);
+        console.log(defaultAlbumsAmount);
         const pageInfo = createElement({
             tag: 'div',
             className: 'albumPage__info',
@@ -27,7 +26,7 @@ export async function renderAlbums() {
         const pageDescription = createElement({
             tag: 'p',
             className: 'albumPage__description',
-            value: `${defaultAlbumsAmount} albums filled with various photos for you!`,
+            value: `${defaultAlbumsAmount.length} albums filled with various photos for you!`,
         });
         pageInfo.appendChild(pageDescription);
         const albumsWrapper = createElement({
@@ -35,48 +34,7 @@ export async function renderAlbums() {
             className: 'albumPage__wrapper',
         });
         wrapper.appendChild(albumsWrapper);
-        for (let i = 1; i <= defaultAlbumsAmount; i++) {
-            const album = createElement({
-                tag: 'div',
-                className: 'album',
-                id: i.toString(),
-            });
-            albumsWrapper.appendChild(album);
-            const thumbnail = createElement({
-                tag: 'img',
-                className: 'album__first-image',
-                attribute: 'src',
-                attrValue: await setThumbnailSource(i),
-            });
-            album.appendChild(thumbnail);
-            const albumInfo = createElement({
-                tag: 'div',
-                className: 'album__info',
-            });
-            album.appendChild(albumInfo);
-            const heading = createElement({
-                tag: 'h3',
-                className: 'album__heading',
-                value: albumsArr[i].title,
-            });
-            albumInfo.appendChild(heading);
-            const id = createElement({
-                tag: 'p',
-                className: 'album__ID',
-                value: i.toString(),
-            });
-            albumInfo.appendChild(id);
-
-            album.addEventListener('click', () => {
-                console.log(`State id #1: ${getStateValue('id')}`);
-                console.log(`Album id #1: ${album.id}`);
-                setStateValue('id', Number(album.id));
-                console.log(`State id #2: ${getStateValue('id')}`);
-                console.log(`Album id #2: ${album.id}`);
-                localStorage.setItem('albumID', album.id);
-                setStateValue('screen', 'gallery');
-            });
-        }
+        renderAlbumElements(defaultAlbumsAmount, albumsWrapper);
         createLoadMoreBtn(onLoadMore);
         localStorage.setItem('screenType', ScreenType.albums);
     } catch (err) {

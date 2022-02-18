@@ -7,9 +7,9 @@ import {Photos} from './modules/types';
 import {renderFullImage} from './modules/renderFullImage';
 import {renderModalWindow} from './modules/renderModal';
 import {renderImage} from './modules/renderImage';
+import {useCorrectIDfromArray} from './modules/useCorrectIDfromArray';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
-const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
 
 let imageIndex = 0;
 
@@ -24,15 +24,21 @@ export async function renderGallery() {
 
     if (Object.keys(photosFromState).length !== 0) {
         photos = photosFromState;
+        console.log('The very first Load');
     } else {
         photos = {
             [albumId]: await getData(
                 `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`
             ),
         };
+        console.log('Second Load');
     }
 
     try {
+        console.log(`ID STATE VALUE: ${idFromState}`);
+        console.log(
+            `ID FROM LOCALSTORAGE: ${Number(localStorage.getItem('albumID'))}`
+        );
         wrapper.innerHTML = '';
         const galleryWrapper = createElement({
             tag: 'div',
@@ -40,6 +46,9 @@ export async function renderGallery() {
         });
         wrapper.appendChild(galleryWrapper);
         const restoredAlbums = JSON.parse(localStorage.getItem('albumsInfo'));
+        console.log(restoredAlbums);
+        console.log(albumId);
+        console.log(restoredAlbums[albumId].title);
         const galleryInfo = createElement({
             tag: 'div',
             className: 'gallery__info',
@@ -48,7 +57,7 @@ export async function renderGallery() {
         const galleryHeading = createElement({
             tag: 'h1',
             className: 'gallery__heading',
-            value: `${restoredAlbums[albumId].title}`,
+            value: `${restoredAlbums[useCorrectIDfromArray(albumId)].title}`,
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
