@@ -1,4 +1,4 @@
-import {onLoadMore} from '.';
+import {onLoadMore} from './modules/onLoadMore';
 import {createElement} from './createElement';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
 import {ScreenType} from './enums';
@@ -11,7 +11,6 @@ const defaultAlbumsAmount: any = JSON.parse(
 let chosenAlbum = '';
 export async function renderAlbums() {
     try {
-        console.log(defaultAlbumsAmount);
         const pageInfo = createElement({
             tag: 'div',
             className: 'albumPage__info',
