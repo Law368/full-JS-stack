@@ -1,6 +1,6 @@
 import {createElement} from './createElement';
 import {ScreenType, GalleryMode} from './enums';
-function renderFullImage(imageURL: any) {
+function renderFullImage(imageURL: string) {
     const modal: HTMLElement = document.querySelector('.modal');
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
