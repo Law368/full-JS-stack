@@ -1,5 +1,5 @@
-import {createElement} from '../createElement';
-import {ScreenType, GalleryMode} from '../enums';
+import {createElement} from './createElement';
+import {ScreenType, GalleryMode} from './enums';
 function renderFullImage(imageURL: any) {
     const modal: HTMLElement = document.querySelector('.modal');
     modal.style.display = 'block';

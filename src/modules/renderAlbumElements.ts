@@ -1,6 +1,6 @@
-import {createElement} from '../createElement';
-import {setThumbnailSource} from '../setThumbnailSource';
-import {setStateValue} from '../state';
+import {createElement} from './createElement';
+import {setThumbnailSource} from './setThumbnailSource';
+import {setStateValue} from './state';
 
 async function renderAlbumElements(array: any, albumsWrapper: any) {
     for (let i = 0; i < array.length; i++) {

@@ -1,4 +1,4 @@
-import {getData} from '../getData';
+import {getData} from './getData';
 import {renderAlbumElements} from './renderAlbumElements';
 
 let pageCounter = 1;

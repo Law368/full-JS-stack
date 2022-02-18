@@ -1,7 +1,7 @@
-import {createElement} from '../createElement';
-import {shiftNextImgSrc} from '../shiftNextImageSrc';
-import {shiftPrevImgSrc} from '../shiftPrevImageSrc';
-import {GalleryMode} from '../enums';
+import {createElement} from './createElement';
+import {shiftNextImgSrc} from './shiftNextImageSrc';
+import {shiftPrevImgSrc} from './shiftPrevImageSrc';
+import {GalleryMode} from './enums';
 
 let fullImage;
 let imageIndex = 0;

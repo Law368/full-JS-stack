@@ -1,8 +1,8 @@
-import {onLoadMore} from './modules/onLoadMore';
+import {onLoadMore} from './onLoadMore';
 import {createElement} from './createElement';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
 import {ScreenType} from './enums';
-import {renderAlbumElements} from './modules/renderAlbumElements';
+import {renderAlbumElements} from './renderAlbumElements';
 
 const wrapper = document.querySelector('.content-wrapper');
 const defaultAlbumsAmount: any = JSON.parse(

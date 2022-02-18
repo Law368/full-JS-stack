@@ -1,7 +1,7 @@
 import './style.scss';
-import {renderGallery} from './renderGallery';
-import {renderAlbums} from './renderAlbums';
-import {ScreenType} from './enums';
+import {renderGallery} from './modules/renderGallery';
+import {renderAlbums} from './modules/renderAlbums';
+import {ScreenType} from './modules/enums';
 import {fetchAlbumsInfo} from './modules/fetchAlbumsInfo';
 
 const screenType = localStorage.getItem('screenType');

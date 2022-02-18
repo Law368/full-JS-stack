@@ -1,4 +1,4 @@
-import {imageIndex} from './modules/renderModal';
+import {imageIndex} from './renderModal';
 function shiftPrevImgSrc(imageIndex: number) {
     return imageIndex - 1;
 }

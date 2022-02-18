@@ -1,13 +1,13 @@
 import {createElement} from './createElement';
-import {createBtn} from './modules/createBtn';
+import {createBtn} from './createBtn';
 import {getData} from './getData';
 import {ScreenType, GalleryMode} from './enums';
 import {getStateValue} from './state';
-import {Photos} from './modules/types';
-import {renderFullImage} from './modules/renderFullImage';
-import {renderModalWindow} from './modules/renderModal';
-import {renderImage} from './modules/renderImage';
-import {useCorrectIDfromArray} from './modules/useCorrectIDfromArray';
+import {Photos} from './types';
+import {renderFullImage} from './renderFullImage';
+import {renderModalWindow} from './renderModal';
+import {renderImage} from './renderImage';
+import {useCorrectIDfromArray} from './useCorrectIDfromArray';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
 

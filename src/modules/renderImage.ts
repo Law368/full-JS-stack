@@ -1,4 +1,4 @@
-import {createElement} from '../createElement';
+import {createElement} from './createElement';
 import {renderFullImage} from './renderFullImage';
 function renderImage(array: any, imageIndex: any, wrapper: any) {
     for (let i = 0; i < array.length; i += 1) {
