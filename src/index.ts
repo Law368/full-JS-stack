@@ -6,8 +6,7 @@ import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {ScreenType} from './enums';
 import {getStateValue, setStateValue} from './state';
-// TODO:  переименовать в defaultAlbumsAmount
-const defaultAlbumsNumberOnPage: number = 8;
+const defaultAlbumsAmount: number = 8;
 let pageCounter = 1;
 
 ////////////////////////// Вынести в отдельную функцию
@@ -19,12 +18,8 @@ export async function onLoadMore() {
     const albumsWrapper = document.querySelector('.albumPage__wrapper');
     const newAlbums = await getData(
         `https://jsonplaceholder.typicode.com/albums/?_start=${
-            defaultAlbumsNumberOnPage * pageCounter + 1
-        }&_end=${
-            defaultAlbumsNumberOnPage * pageCounter +
-            defaultAlbumsNumberOnPage +
-            1
-        }`
+            defaultAlbumsAmount * pageCounter + 1
+        }&_end=${defaultAlbumsAmount * pageCounter + defaultAlbumsAmount + 1}`
     );
     for (let i = 0; i < newAlbums.length; i++) {
         console.log(newAlbums[i].id);

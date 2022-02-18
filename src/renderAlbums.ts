@@ -8,7 +8,7 @@ import {getStateValue, setStateValue} from './state';
 
 const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/ ';
 const wrapper = document.querySelector('.content-wrapper');
-const defaultAlbumsNumberOnPage: number = 8;
+const defaultAlbumsAmount: number = 8;
 let chosenAlbum = '';
 export async function renderAlbums() {
     try {
@@ -27,7 +27,7 @@ export async function renderAlbums() {
         const pageDescription = createElement({
             tag: 'p',
             className: 'albumPage__description',
-            value: `${defaultAlbumsNumberOnPage} albums filled with various photos for you!`,
+            value: `${defaultAlbumsAmount} albums filled with various photos for you!`,
         });
         pageInfo.appendChild(pageDescription);
         const albumsWrapper = createElement({
@@ -35,7 +35,7 @@ export async function renderAlbums() {
             className: 'albumPage__wrapper',
         });
         wrapper.appendChild(albumsWrapper);
-        for (let i = 1; i <= defaultAlbumsNumberOnPage; i++) {
+        for (let i = 1; i <= defaultAlbumsAmount; i++) {
             const album = createElement({
                 tag: 'div',
                 className: 'album',

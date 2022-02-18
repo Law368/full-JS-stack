@@ -1,7 +1,7 @@
 import {createElement} from './createElement';
 
 const wrapper = document.querySelector('.content-wrapper');
-const defaultAlbumsNumberOnPage: number = 8;
+const defaultAlbumsAmount: number = 8;
 export async function createLoadMoreBtn(clickHandler: () => void) {
     const loadMoreBtn = createElement({
         tag: 'button',
