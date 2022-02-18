@@ -8,6 +8,7 @@ import {getStateValue} from './state';
 import {Photos} from './modules/types';
 import {renderFullImage} from './modules/renderFullImage';
 import {renderModalWindow} from './modules/renderModal';
+import {renderImage} from './modules/renderImage';
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
 const albumsUrl = 'https://jsonplaceholder.typicode.com/albums/';
@@ -57,29 +58,7 @@ export async function renderGallery() {
         const photosArr = photos[albumId];
         renderModalWindow(photos, albumId);
         //TODO: Вынести отдельно функцию создания изображений
-        for (let i = 0; i < photosArr.length; i += 1) {
-            const imageContainer = createElement({
-                tag: 'div',
-                className: 'gallery__image-container',
-            });
-            galleryWrapper.appendChild(imageContainer);
-            let image = createElement({
-                tag: 'img',
-                className: 'gallery__image',
-                id: String(photosArr[i].id),
-
-                attribute: 'src',
-                attrValue: photosArr[i].url,
-            });
-            image.dataset.order = i.toString();
-            imageContainer.appendChild(image);
-
-            image.addEventListener('click', () => {
-                imageIndex = Number(image.dataset.order);
-                localStorage.setItem('fullImageUrl', image.getAttribute('src'));
-                renderFullImage(localStorage.getItem('fullImageUrl'));
-            });
-        }
+        renderImage(photosArr, imageIndex, galleryWrapper);
         createBtn();
         localStorage.setItem('screenType', ScreenType.gallery);
         localStorage.setItem('galleryMode', GalleryMode.thumbnails);
