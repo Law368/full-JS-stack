@@ -7,15 +7,13 @@ const defaultAlbumsAmount: any = JSON.parse(
 ).slice(0, 8);
 
 async function onLoadMore() {
-    console.log(defaultAlbumsAmount);
     const albumsWrapper = document.querySelector('.albumPage__wrapper');
     const newAlbums = await getData(
         `https://jsonplaceholder.typicode.com/albums/?_start=${
-            defaultAlbumsAmount.length * pageCounter + 1
+            defaultAlbumsAmount.length * pageCounter
         }&_end=${
             defaultAlbumsAmount.length * pageCounter +
-            defaultAlbumsAmount.length +
-            1
+            defaultAlbumsAmount.length
         }`
     );
     renderAlbumElements(newAlbums, albumsWrapper);
