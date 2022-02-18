@@ -2,14 +2,11 @@ import './style.scss';
 import {renderGallery} from './modules/renderGallery';
 import {renderAlbums} from './modules/renderAlbums';
 import {ScreenType} from './modules/enums';
-import {fetchAlbumsInfo} from './modules/fetchAlbumsInfo';
-
+// TODO: удалить папку dist  и добавить ее в .gitignore
 const screenType = localStorage.getItem('screenType');
 
-fetchAlbumsInfo();
-
-if (screenType === ScreenType.albums) {
-    renderAlbums();
-} else {
+if (screenType === ScreenType.gallery) {
     renderGallery();
+} else {
+    renderAlbums();
 }

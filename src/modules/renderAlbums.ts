@@ -3,14 +3,18 @@ import {createElement} from './createElement';
 import {createLoadMoreBtn} from './createLoadMoreBtn';
 import {ScreenType} from './enums';
 import {renderAlbumElements} from './renderAlbumElements';
+import {fetchAlbumsInfo} from './fetchAlbumsInfo';
 
 const wrapper = document.querySelector('.content-wrapper');
-const defaultAlbumsAmount: any = JSON.parse(
-    localStorage.getItem('albumsInfo')
-).slice(0, 8);
+// TODO: Добавить типизацию для всех any файлов
 let chosenAlbum = '';
 export async function renderAlbums() {
     try {
+        await fetchAlbumsInfo();
+        // TODO: изменить название переменной на albums, вставить в slice переменную defaultAlbumsAmount вместо числа 8
+        const defaultAlbumsAmount: any = JSON.parse(
+            localStorage.getItem('albumsInfo')
+        ).slice(0, 8);
         const pageInfo = createElement({
             tag: 'div',
             className: 'albumPage__info',

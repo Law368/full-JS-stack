@@ -1,6 +1,8 @@
 import {createElement} from './createElement';
 import {renderFullImage} from './renderFullImage';
-function renderImage(array: any, imageIndex: any, wrapper: any) {
+import {Photo} from './types';
+function renderImage(array: Photo[], imageIndex: any, wrapper: any) {
+    debugger;
     for (let i = 0; i < array.length; i += 1) {
         const imageContainer = createElement({
             tag: 'div',
@@ -21,7 +23,7 @@ function renderImage(array: any, imageIndex: any, wrapper: any) {
         image.addEventListener('click', () => {
             imageIndex = Number(image.dataset.order);
             localStorage.setItem('fullImageUrl', image.getAttribute('src'));
-            renderFullImage(localStorage.getItem('fullImageUrl'));
+            renderFullImage(image.getAttribute('src'));
         });
     }
 }
