@@ -2,8 +2,6 @@ import {createElement} from './createElement';
 import {createBtn} from './modules/createBtn';
 import {getData} from './getData';
 import {ScreenType, GalleryMode} from './enums';
-import {shiftNextImgSrc} from './shiftNextImageSrc';
-import {shiftPrevImgSrc} from './shiftPrevImageSrc';
 import {getStateValue} from './state';
 import {Photos} from './modules/types';
 import {renderFullImage} from './modules/renderFullImage';
@@ -23,7 +21,6 @@ export async function renderGallery() {
         ? idFromState
         : Number(localStorage.getItem('albumID'));
     let photos: Photos;
-    // {[key: string]: []}
 
     if (Object.keys(photosFromState).length !== 0) {
         photos = photosFromState;
@@ -42,8 +39,7 @@ export async function renderGallery() {
             className: 'gallery__Wrapper',
         });
         wrapper.appendChild(galleryWrapper);
-        // TODO: класть в local storage все альбомы (использовать json.stringify чтобы объект переконвертировать в строку)
-        const albumsArr = await getData(albumsUrl);
+        const restoredAlbums = JSON.parse(localStorage.getItem('albumsInfo'));
         const galleryInfo = createElement({
             tag: 'div',
             className: 'gallery__info',
@@ -52,12 +48,11 @@ export async function renderGallery() {
         const galleryHeading = createElement({
             tag: 'h1',
             className: 'gallery__heading',
-            value: `${albumsArr[albumId].title}`,
+            value: `${restoredAlbums[albumId].title}`,
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
         renderModalWindow(photos, albumId);
-        //TODO: Вынести отдельно функцию создания изображений
         renderImage(photosArr, imageIndex, galleryWrapper);
         createBtn();
         localStorage.setItem('screenType', ScreenType.gallery);

@@ -6,6 +6,7 @@ import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {ScreenType} from './enums';
 import {getStateValue, setStateValue} from './state';
+import {fetchAlbumsInfo} from './modules/fetchAlbumsInfo';
 const defaultAlbumsAmount: number = 8;
 let pageCounter = 1;
 
@@ -73,5 +74,6 @@ async function renderPage() {
         renderGallery();
     }
 }
-
+fetchAlbumsInfo();
+console.log(fetchAlbumsInfo);
 renderPage();
