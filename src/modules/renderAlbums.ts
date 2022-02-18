@@ -4,6 +4,7 @@ import {createLoadMoreBtn} from './createLoadMoreBtn';
 import {ScreenType} from './enums';
 import {renderAlbumElements} from './renderAlbumElements';
 import {fetchAlbumsInfo} from './fetchAlbumsInfo';
+import {defaultAlbumsAmount} from './defaultAlbumsAmount';
 
 const wrapper = document.querySelector('.content-wrapper');
 // TODO: Добавить типизацию для всех any файлов
@@ -11,10 +12,9 @@ let chosenAlbum = '';
 export async function renderAlbums() {
     try {
         await fetchAlbumsInfo();
-        // TODO: изменить название переменной на albums, вставить в slice переменную defaultAlbumsAmount вместо числа 8
-        const defaultAlbumsAmount: any = JSON.parse(
+        const albums: any = JSON.parse(
             localStorage.getItem('albumsInfo')
-        ).slice(0, 8);
+        ).slice(0, defaultAlbumsAmount);
         const pageInfo = createElement({
             tag: 'div',
             className: 'albumPage__info',
@@ -29,7 +29,7 @@ export async function renderAlbums() {
         const pageDescription = createElement({
             tag: 'p',
             className: 'albumPage__description',
-            value: `${defaultAlbumsAmount.length} albums filled with various photos for you!`,
+            value: `${albums.length} albums filled with various photos for you!`,
         });
         pageInfo.appendChild(pageDescription);
         const albumsWrapper = createElement({
@@ -37,7 +37,7 @@ export async function renderAlbums() {
             className: 'albumPage__wrapper',
         });
         wrapper.appendChild(albumsWrapper);
-        renderAlbumElements(defaultAlbumsAmount, albumsWrapper);
+        renderAlbumElements(albums, albumsWrapper);
         createLoadMoreBtn(onLoadMore);
         localStorage.setItem('screenType', ScreenType.albums);
     } catch (err) {
