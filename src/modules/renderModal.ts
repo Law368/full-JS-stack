@@ -2,10 +2,11 @@ import {createElement} from './createElement';
 import {shiftNextImgSrc} from './shiftNextImageSrc';
 import {shiftPrevImgSrc} from './shiftPrevImageSrc';
 import {GalleryMode} from './enums';
+import {Photo, Photos, Albums, Album} from './types';
 
 let fullImage;
 let imageIndex = 0;
-function renderModalWindow(photos: any, albumId: any) {
+function renderModalWindow(photos: any, albumId: number) {
     const modal = createElement({
         tag: 'div',
         className: 'modal',

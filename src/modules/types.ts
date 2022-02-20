@@ -20,4 +20,14 @@ interface Photo {
     url: string;
 }
 
-export {Photos, Photo};
+interface Albums {
+    [key: number]: Album[];
+}
+
+interface Album {
+    userId: number;
+    id: number;
+    title: string;
+}
+
+export {Albums, Album, Photos, Photo};

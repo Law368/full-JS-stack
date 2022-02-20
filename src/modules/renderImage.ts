@@ -1,8 +1,7 @@
 import {createElement} from './createElement';
 import {renderFullImage} from './renderFullImage';
 import {Photo} from './types';
-function renderImage(array: Photo[], imageIndex: any, wrapper: any) {
-    debugger;
+function renderImage(array: Photo[], imageIndex: number, wrapper: Element) {
     for (let i = 0; i < array.length; i += 1) {
         const imageContainer = createElement({
             tag: 'div',

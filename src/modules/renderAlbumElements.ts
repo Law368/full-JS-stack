@@ -1,8 +1,9 @@
 import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
 import {setStateValue} from './state';
+import {Album} from './types';
 
-async function renderAlbumElements(array: any, albumsWrapper: any) {
+async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
     for (let i = 0; i < array.length; i++) {
         const album = createElement({
             tag: 'div',

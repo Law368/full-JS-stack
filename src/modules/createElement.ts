@@ -4,7 +4,7 @@ interface CreateElementProps {
     id?: string;
     value?: string;
     attribute?: string;
-    attrValue?: any;
+    attrValue?: string;
 }
 
 function createElement(props: CreateElementProps) {

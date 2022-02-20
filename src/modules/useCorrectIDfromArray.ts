@@ -1,4 +1,4 @@
-function useCorrectIDfromArray(albumID: any) {
+function useCorrectIDfromArray(albumID: number) {
     return albumID - 1;
 }
 

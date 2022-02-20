@@ -1,13 +1,14 @@
 import {renderAlbums} from './renderAlbums';
 import {renderGallery} from './renderGallery';
+import {Photos} from './types';
 
 const state: {
     _screen: string;
     screen: string;
     id: any;
     _id: any;
-    _photos: any;
-    photos: any;
+    _photos: Photos;
+    photos: Photos;
 } = {
     _screen: 'albums',
     _id: null,

@@ -52,6 +52,7 @@ export async function renderGallery() {
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
+        debugger;
         renderModalWindow(photos, albumId);
         renderImage(photosArr, imageIndex, galleryWrapper);
         createBtn();
