@@ -1,6 +1,6 @@
 import {createElement} from './createElement';
 import {setThumbnailSource} from './setThumbnailSource';
-import {setStateValue} from './state';
+import {setId, setScreen} from './state';
 import {Album} from './types';
 
 async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
@@ -13,8 +13,8 @@ async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
         albumsWrapper.appendChild(album);
         album.addEventListener('click', () => {
             console.log(`ID текущего альбома из массива ${array[i].id}`);
-            setStateValue('id', array[i].id);
-            setStateValue('screen', 'gallery');
+            setId(array[i].id);
+            setScreen('gallery');
             localStorage.setItem('albumID', album.id);
         });
         const thumbnail = createElement({

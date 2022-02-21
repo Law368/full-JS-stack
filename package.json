@@ -13,8 +13,9 @@
     },
     "jest": {
         "transform": {
-            "^.+\\.[t|j]sx?$": "ts-jest"
-        }
+            "\\.[jt]sx?$": "babel-jest"
+        },
+        "testEnvironment": "jsdom"
     },
     "repository": {
         "type": "git",

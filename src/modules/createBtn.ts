@@ -1,5 +1,5 @@
 import {createElement} from './createElement';
-import {getStateValue, setStateValue} from './state';
+import {getStateValue, setScreen} from './state';
 
 const wrapper = document.querySelector('.content-wrapper');
 export function createBtn() {
@@ -11,7 +11,7 @@ export function createBtn() {
     wrapper.appendChild(returnBtn);
     returnBtn.addEventListener('click', () => {
         wrapper.innerHTML = '';
-        setStateValue('screen', 'albums');
+        setScreen('albums');
     });
     return returnBtn;
 }

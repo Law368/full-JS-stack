@@ -1,6 +1,6 @@
 import {renderAlbums} from './renderAlbums';
 import {renderGallery} from './renderGallery';
-import {Photos} from './types';
+import {Photos, Album} from './types';
 type ValueOf<T> = T[keyof T];
 const state: {
     _screen: string;
@@ -52,6 +52,14 @@ export const setPhotos = (value: {id: number; photos: Photos}) => {
 };
 export const getPhotos = () => state.photos;
 
+export const setId = (value: number | null) => {
+    state.id = value;
+};
+export const getId = () => state.id;
+export const setScreen = (value: string) => {
+    state.screen = value;
+};
+export const getScreen = () => state.screen;
 //(result as Record<typeof key, typeof key>)[key] = key;
 
 //TODO: написать специфичные геттеры/сеттеры для каждого из пропсов стейта

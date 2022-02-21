@@ -1,4 +1,4 @@
-import createElement from '../modules/createElement';
+import {createElement} from '../modules/createElement';
 
 test('creating new element works', () => {
     const element = createElement({
