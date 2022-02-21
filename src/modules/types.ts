@@ -2,6 +2,15 @@ interface Photos {
     [key: number]: Photo[];
 }
 
+interface State {
+    _screen: string;
+    screen: string;
+    id: number | null;
+    _id: number | null;
+    _photos: Photos;
+    photos: Photos;
+}
+
 // type Photos = Array<{
 //     [key: number]: {
 //         albumId: number;
@@ -30,4 +39,4 @@ interface Album {
     title: string;
 }
 
-export {Albums, Album, Photos, Photo};
+export {Albums, Album, Photos, Photo, State};

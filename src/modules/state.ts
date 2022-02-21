@@ -1,12 +1,12 @@
 import {renderAlbums} from './renderAlbums';
 import {renderGallery} from './renderGallery';
 import {Photos} from './types';
-
+type ValueOf<T> = T[keyof T];
 const state: {
     _screen: string;
     screen: string;
-    id: any;
-    _id: any;
+    id: number;
+    _id: number;
     _photos: Photos;
     photos: Photos;
 } = {
@@ -44,5 +44,14 @@ export const setStateValue = (
     prop: keyof typeof state,
     value: string | any
 ) => {
-    state[prop] = value;
+    (state as Record<keyof typeof state, ValueOf<typeof state>>)[prop] = value;
+    // state[prop] = value;
 };
+export const setPhotos = (value: {id: number; photos: Photos}) => {
+    state.photos = value;
+};
+export const getPhotos = () => state.photos;
+
+//(result as Record<typeof key, typeof key>)[key] = key;
+
+//TODO: написать специфичные геттеры/сеттеры для каждого из пропсов стейта

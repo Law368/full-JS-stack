@@ -2,7 +2,7 @@ import {createElement} from './createElement';
 import {createBtn} from './createBtn';
 import {getData} from './getData';
 import {ScreenType, GalleryMode} from './enums';
-import {getStateValue} from './state';
+import {getPhotos, getStateValue} from './state';
 import {Photos} from './types';
 import {renderFullImage} from './renderFullImage';
 import {renderModalWindow} from './renderModal';
@@ -15,7 +15,7 @@ let imageIndex = 0;
 
 export async function renderGallery() {
     const idFromState = getStateValue('id');
-    const photosFromState = getStateValue('photos');
+    const photosFromState = getPhotos();
 
     const albumId = idFromState
         ? idFromState
