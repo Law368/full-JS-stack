@@ -1,5 +1,5 @@
 import {createElement} from './createElement';
-import {getStateValue, setScreen} from './state';
+import {setScreen} from './state';
 
 const wrapper = document.querySelector('.content-wrapper');
 export function createBtn() {
