@@ -61,6 +61,7 @@ export async function renderGallery() {
 
         if (galleryMode === GalleryMode.fullscreen) {
             renderFullImage(localStorage.getItem('fullImageUrl'));
+            console.log(localStorage.getItem('fullImageUrl'));
         }
     } catch (err) {
         console.log('The gallery wasnt created', err);

@@ -9,7 +9,7 @@
         "build": "webpack",
         "stylelint": "stylelint '**/*{.css,.scss}'",
         "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
-        "test": "jest"
+        "test": "jest --collect-coverage"
     },
     "jest": {
         "transform": {

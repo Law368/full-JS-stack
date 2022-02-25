@@ -1,10 +1,11 @@
-import {createElement} from './createElement';
-import {setThumbnailSource} from './setThumbnailSource';
-import {setId, setScreen} from './state';
-import {Album} from './types';
+import {createElement} from '../createElement';
+import {setThumbnailSource} from '../setThumbnailSource';
+import {setId, setScreen} from '../state';
+import {Album} from '../types';
 
 async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
     for (let i = 0; i < array.length; i++) {
+        // TODO: 1.Не добавлять элемент в реальный DOM  на каждой итерации, 2. Можем ли мы заранее и паралельно загрузить обложки длянаших альбомов?
         const album = createElement({
             tag: 'div',
             className: 'album',
@@ -12,7 +13,6 @@ async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
         });
         albumsWrapper.appendChild(album);
         album.addEventListener('click', () => {
-            console.log(`ID текущего альбома из массива ${array[i].id}`);
             setId(array[i].id);
             setScreen('gallery');
             localStorage.setItem('albumID', album.id);

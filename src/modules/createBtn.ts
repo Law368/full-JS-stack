@@ -1,8 +1,9 @@
 import {createElement} from './createElement';
 import {setScreen} from './state';
 
-const wrapper = document.querySelector('.content-wrapper');
 export function createBtn() {
+    const wrapper = document.querySelector('.content-wrapper');
+
     const returnBtn = createElement({
         tag: 'button',
         className: 'gallery__btn-back',

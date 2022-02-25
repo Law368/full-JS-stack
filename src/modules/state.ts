@@ -1,4 +1,4 @@
-import {renderAlbums} from './renderAlbums';
+import {renderAlbums} from './renderAlbums/renderAlbums';
 import {renderGallery} from './renderGallery';
 import {Photos, Album} from './types';
 type ValueOf<T> = T[keyof T];

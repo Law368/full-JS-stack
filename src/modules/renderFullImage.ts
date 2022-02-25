@@ -14,6 +14,7 @@ function renderFullImage(imageURL: string) {
     modalContent.appendChild(fullImage);
     localStorage.setItem('screenType', ScreenType.gallery);
     localStorage.setItem('galleryMode', GalleryMode.fullscreen);
+    console.log();
 }
 
 export {renderFullImage};

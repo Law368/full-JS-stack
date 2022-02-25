@@ -36,7 +36,6 @@ function renderModalWindow(photos: Photos, albumId: number) {
         if (Number(imageIndex) >= photos[albumId].length - 1) {
             imageIndex = 0;
         }
-        console.log(photos, albumId, imageIndex);
         fullImage = createElement({
             tag: 'img',
             className: 'gallery__image--selected',

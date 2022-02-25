@@ -1,7 +1,8 @@
 import {createElement} from './createElement';
 
-const wrapper = document.querySelector('.content-wrapper');
 export async function createLoadMoreBtn(clickHandler: () => void) {
+    const wrapper = document.querySelector('.content-wrapper');
+
     const loadMoreBtn = createElement({
         tag: 'button',
         className: 'albumPage__load-button',

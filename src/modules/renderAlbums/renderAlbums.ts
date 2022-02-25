@@ -1,14 +1,13 @@
-import {onLoadMore} from './onLoadMore';
-import {createElement} from './createElement';
-import {createLoadMoreBtn} from './createLoadMoreBtn';
-import {ScreenType} from './enums';
+import {onLoadMore} from '../onLoadMore';
+import {createElement} from '../createElement';
+import {createLoadMoreBtn} from '../createLoadMoreBtn';
+import {ScreenType} from '../enums';
 import {renderAlbumElements} from './renderAlbumElements';
-import {fetchAlbumsInfo} from './fetchAlbumsInfo';
-import {defaultAlbumsAmount} from './defaultAlbumsAmount';
-import {Album} from './types';
+import {fetchAlbumsInfo} from '../fetchAlbumsInfo';
+import {defaultAlbumsAmount} from '../defaultAlbumsAmount';
+import {Album} from '../types';
 
 const wrapper = document.querySelector('.content-wrapper');
-// TODO: Добавить типизацию для всех any файлов
 let chosenAlbum = '';
 export async function renderAlbums() {
     try {
