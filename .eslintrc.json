@@ -3,10 +3,14 @@
         "es6": true,
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "jest/globals": true
     },
     "extends": [
-        "airbnb-base", "airbnb-typescript/base","eslint:recommended", "prettier"
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "eslint:recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -14,9 +18,7 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
-    "plugins": [
-        "@typescript-eslint", "prettier"
-    ],
+    "plugins": ["@typescript-eslint", "jest", "prettier"],
     "rules": {
         "import/prefer-default-export": "off",
         "no-plusplus": "off",
@@ -24,7 +26,7 @@
         "prettier/prettier": "warn",
         "no-await-in-loop": "off",
         "@typescript-eslint/no-use-before-define": "off",
-        
+        "import/no-cycle": "off"
     },
     "settings": {
         "import/resolver": "webpack"
@@ -32,10 +34,10 @@
 }
 
 // "settings": {
-    //     "import/resolver": {
-    //       "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
-    //     },
-    //   },
+//     "import/resolver": {
+//       "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
+//     },
+//   },
 
 // "plugin:@typescript-eslint/eslint-recommended",
 
