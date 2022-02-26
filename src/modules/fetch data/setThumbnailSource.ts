@@ -1,5 +1,5 @@
 import {getData} from './getData';
-import {setPhotos} from './state';
+import {setPhotos} from '../state/state';
 
 export async function setThumbnailSource(albumId: number) {
     const photosArr = await getData(

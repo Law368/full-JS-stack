@@ -1,25 +1,24 @@
-import {createElement} from './createElement';
+import {createElement} from '../create elements/createElement';
 import {createBtn} from './createBtn';
-import {getData} from './getData';
-import {ScreenType, GalleryMode} from './enums';
-import {getPhotos, getId} from './state';
-import {Photos} from './types';
+import {getData} from '../fetch data/getData';
+import {ScreenType, GalleryMode} from '../Enums and Types/enums';
+import {getId, getPhotos} from '../state/state';
+import {Photos} from '../Enums and Types/types';
 import {renderFullImage} from './renderFullImage';
 import {renderModalWindow} from './renderModal';
 import {renderImage} from './renderImage';
-import {useCorrectIDfromArray} from './useCorrectIDfromArray';
+import {useCorrectIDfromArray} from '../helpers/useCorrectIDfromArray';
+
 const wrapper = document.querySelector('.content-wrapper');
 const galleryMode = localStorage.getItem('galleryMode');
 
-let imageIndex = 0;
+const imageIndex = 0;
 
 export async function renderGallery() {
     const idFromState = getId();
     const photosFromState = getPhotos();
 
-    const albumId = idFromState
-        ? idFromState
-        : Number(localStorage.getItem('albumID'));
+    const albumId = idFromState || Number(localStorage.getItem('albumID'));
     let photos: Photos;
 
     if (Object.keys(photosFromState).length !== 0) {
@@ -52,7 +51,6 @@ export async function renderGallery() {
         });
         galleryInfo.appendChild(galleryHeading);
         const photosArr = photos[albumId];
-        debugger;
         renderModalWindow(photos, albumId);
         renderImage(photosArr, imageIndex, galleryWrapper);
         createBtn();

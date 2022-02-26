@@ -1,13 +1,12 @@
-import {createElement} from './createElement';
-import {shiftNextImgSrc} from './shiftNextImageSrc';
-import {shiftPrevImgSrc} from './shiftPrevImageSrc';
-import {GalleryMode} from './enums';
-import {Photo, Photos, Albums, Album} from './types';
+import {createElement} from '../create elements/createElement';
+import {shiftNextImgSrc} from '../helpers/shiftNextImageSrc';
+import {shiftPrevImgSrc} from '../helpers/shiftPrevImageSrc';
+import {GalleryMode} from '../Enums and Types/enums';
+import {Photos} from '../Enums and Types/types';
 
 let fullImage;
 let imageIndex = 0;
 function renderModalWindow(photos: Photos, albumId: number) {
-    debugger;
     const modal = createElement({
         tag: 'div',
         className: 'modal',
@@ -32,7 +31,7 @@ function renderModalWindow(photos: Photos, albumId: number) {
         value: 'NEXT',
     });
     modal.appendChild(nextImage);
-    nextImage.addEventListener('click', function () {
+    nextImage.addEventListener('click', () => {
         if (Number(imageIndex) >= photos[albumId].length - 1) {
             imageIndex = 0;
         }
@@ -45,7 +44,7 @@ function renderModalWindow(photos: Photos, albumId: number) {
             }`,
         });
         modalContent.appendChild(fullImage);
-        imageIndex = imageIndex + 1;
+        imageIndex += 1;
     });
 
     const previousImage = createElement({
@@ -54,7 +53,7 @@ function renderModalWindow(photos: Photos, albumId: number) {
         value: 'PREV',
     });
     modal.appendChild(previousImage);
-    previousImage.addEventListener('click', function () {
+    previousImage.addEventListener('click', () => {
         if (Number(imageIndex) <= 0) {
             imageIndex = photos[albumId].length;
         }
@@ -67,7 +66,7 @@ function renderModalWindow(photos: Photos, albumId: number) {
             }`,
         });
         modalContent.appendChild(fullImage);
-        imageIndex = imageIndex - 1;
+        imageIndex -= 1;
     });
 
     closeModal.addEventListener('click', () => {

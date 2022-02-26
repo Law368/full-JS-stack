@@ -1,4 +1,4 @@
-import {createElement} from '../modules/createElement';
+import {createElement} from '../modules/create elements/createElement';
 
 test('render full image returns truthy Value', () => {
     const testString = 'https://via.placeholder.com/600/e743b';

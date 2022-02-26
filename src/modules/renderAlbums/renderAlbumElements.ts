@@ -1,7 +1,7 @@
-import {createElement} from '../createElement';
-import {setThumbnailSource} from '../setThumbnailSource';
-import {setId, setScreen} from '../state';
-import {Album} from '../types';
+import {createElement} from '../create elements/createElement';
+import {setThumbnailSource} from '../fetch data/setThumbnailSource';
+import {setId, setScreen} from '../state/state';
+import {Album} from '../Enums and Types/types';
 
 async function renderAlbumElements(array: Album[], albumsWrapper: Element) {
     for (let i = 0; i < array.length; i++) {

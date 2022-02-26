@@ -21,9 +21,8 @@ function createElement(props: CreateElementProps) {
             element.setAttribute(props.attribute, props.attrValue);
         }
         return element;
-    } else {
-        return null;
     }
+    return null;
 }
 
 export {createElement};

@@ -1,5 +1,6 @@
-import {renderGallery} from '../modules/renderGallery';
-import {getData} from '../modules/getData';
+import {renderGallery} from '../modules/render Gallery/renderGallery';
+import {getData} from '../modules/fetch data/getData';
+
 describe('testing rendering gallery', () => {
     global.fetch = jest.fn(() =>
         Promise.resolve({

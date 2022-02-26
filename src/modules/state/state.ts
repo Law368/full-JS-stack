@@ -1,6 +1,7 @@
-import {renderAlbums} from './renderAlbums/renderAlbums';
-import {renderGallery} from './renderGallery';
-import {Photos, Album} from './types';
+import {renderAlbums} from '../renderAlbums/renderAlbums';
+import {renderGallery} from '../render Gallery/renderGallery';
+import {Photos} from '../Enums and Types/types';
+
 type ValueOf<T> = T[keyof T];
 const state: {
     _screen: string;
@@ -60,6 +61,6 @@ export const setScreen = (value: string) => {
     state.screen = value;
 };
 export const getScreen = () => state.screen;
-//(result as Record<typeof key, typeof key>)[key] = key;
+// (result as Record<typeof key, typeof key>)[key] = key;
 
-//TODO: написать специфичные геттеры/сеттеры для каждого из пропсов стейта
+// TODO: написать специфичные геттеры/сеттеры для каждого из пропсов стейта

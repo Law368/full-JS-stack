@@ -1,6 +1,7 @@
-import {createElement} from './createElement';
+import {createElement} from '../create elements/createElement';
 import {renderFullImage} from './renderFullImage';
-import {Photo} from './types';
+import {Photo} from '../Enums and Types/types';
+
 function renderImage(array: Photo[], imageIndex: number, wrapper: Element) {
     for (let i = 0; i < array.length; i += 1) {
         const imageContainer = createElement({
@@ -8,7 +9,7 @@ function renderImage(array: Photo[], imageIndex: number, wrapper: Element) {
             className: 'gallery__image-container',
         });
         wrapper.appendChild(imageContainer);
-        let image = createElement({
+        const image = createElement({
             tag: 'img',
             className: 'gallery__image',
             id: String(array[i].id),

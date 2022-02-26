@@ -1,7 +1,5 @@
-import {createElement} from '../modules/createElement';
-// TODO: добавить тесты, которые должны проверять какой класс был передан или тег
-// TODO: линтер должен подсвечивать неиспользуемые импорты
-// TODO: занести console.log как warn внутрь eslint
+import {createElement} from '../modules/create elements/createElement';
+
 describe('creating new element', () => {
     test.each`
         func             | parameter    | expected
@@ -9,9 +7,12 @@ describe('creating new element', () => {
         ${createElement} | ${undefined} | ${null}
         ${createElement} | ${null}      | ${null}
         ${createElement} | ${0}         | ${null}
-    `('returns expected', ({func, parameter, expected}) => {
-        expect(func(parameter)).toBe(expected);
-    });
+    `(
+        'returns null if provided with falsy values',
+        ({func, parameter, expected}) => {
+            expect(func(parameter)).toBe(expected);
+        }
+    );
     test('creating new element with correct parameters works', () => {
         const element = createElement({
             tag: 'div',
@@ -20,8 +21,3 @@ describe('creating new element', () => {
         expect(element).toBeTruthy();
     });
 });
-
-//тест на создание кнопки
-//тест на прогрузку страницы по load more
-// тест на рендер полного изображения
-// тест на рендер отдельного альбома

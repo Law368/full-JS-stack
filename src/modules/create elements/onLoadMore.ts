@@ -1,7 +1,8 @@
-import {getData} from './getData';
-import {renderAlbumElements} from './renderAlbums/renderAlbumElements';
-import {defaultAlbumsAmount} from './defaultAlbumsAmount';
-import {Albums} from './types';
+import {getData} from '../fetch data/getData';
+import {renderAlbumElements} from '../renderAlbums/renderAlbumElements';
+import {defaultAlbumsAmount} from '../constants/defaultAlbumsAmount';
+import {Albums} from '../Enums and Types/types';
+
 let pageCounter = 1;
 
 async function onLoadMore() {

@@ -1,14 +1,14 @@
-import {onLoadMore} from '../onLoadMore';
-import {createElement} from '../createElement';
-import {createLoadMoreBtn} from '../createLoadMoreBtn';
-import {ScreenType} from '../enums';
+import {onLoadMore} from '../create elements/onLoadMore';
+import {createElement} from '../create elements/createElement';
+import {createLoadMoreBtn} from '../create elements/createLoadMoreBtn';
+import {ScreenType} from '../Enums and Types/enums';
 import {renderAlbumElements} from './renderAlbumElements';
-import {fetchAlbumsInfo} from '../fetchAlbumsInfo';
-import {defaultAlbumsAmount} from '../defaultAlbumsAmount';
-import {Album} from '../types';
+import {fetchAlbumsInfo} from '../fetch data/fetchAlbumsInfo';
+import {defaultAlbumsAmount} from '../constants/defaultAlbumsAmount';
+import {Album} from '../Enums and Types/types';
 
 const wrapper = document.querySelector('.content-wrapper');
-let chosenAlbum = '';
+const chosenAlbum = '';
 export async function renderAlbums() {
     try {
         await fetchAlbumsInfo();

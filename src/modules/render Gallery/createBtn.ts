@@ -1,5 +1,5 @@
-import {createElement} from './createElement';
-import {setScreen} from './state';
+import {createElement} from '../create elements/createElement';
+import {setScreen} from '../state/state';
 
 export function createBtn() {
     const wrapper = document.querySelector('.content-wrapper');
@@ -14,5 +14,4 @@ export function createBtn() {
         wrapper.innerHTML = '';
         setScreen('albums');
     });
-    return returnBtn;
 }
